@@ -12,6 +12,7 @@ import {
   insertDataProjectSwaggerSchema,
   insertDataSkillSwaggerSchema,
   insertDataUserSwaggerSchema,
+  updateDataUserSwaggerSchema,
 } from "../swagger-schemas";
 import {
   allDataSocialSwaggerSchema,
@@ -59,6 +60,7 @@ const swaggerDefinition: OAS3Definition = {
       AllDataUser: allDataUserSwaggerSchema,
       DataUser: dataUserSwaggerSchema,
       InsertUser: insertDataUserSwaggerSchema,
+      UpdateUser: updateDataUserSwaggerSchema,
       // image
       AllDataImage: allDataImageSwaggerSchema,
       DataImage: dataImageSwaggerSchema,
