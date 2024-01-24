@@ -101,7 +101,7 @@ export const insertDataUserSwaggerSchema = {
     password: {
       type: "string",
       description: "User password",
-      example: "*******",
+      example: "********",
       length: 32,
     },
   },
