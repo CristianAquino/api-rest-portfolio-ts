@@ -1,46 +1,50 @@
+const permanData = {
+  name: {
+    type: "string",
+    description: "User name",
+    example: "Lorem",
+    length: 64,
+  },
+  first_name: {
+    type: "string",
+    description: "User first name",
+    example: "Impsum",
+    length: 128,
+  },
+  second_name: {
+    type: "string",
+    description: "User second name",
+    example: "Dolor",
+    length: 128,
+  },
+  description: {
+    type: "string",
+    description: "User description",
+    example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    length: 200,
+  },
+  email: {
+    type: "string",
+    description: "User email",
+    example: "lorem@ipsum.com",
+  },
+  cv_link: {
+    type: "string",
+    description: "User cv link",
+    example: "https://www.xxxxx.com",
+  },
+};
+
 export const allDataUserSwaggerSchema = {
   type: "array",
   items: {
     type: "object",
     properties: {
+      ...permanData,
       id: {
         type: "string",
         description: "User ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-      },
-      name: {
-        type: "string",
-        description: "User name",
-        example: "Lorem",
-        length: 64,
-      },
-      first_name: {
-        type: "string",
-        description: "User first name",
-        example: "Impsum",
-        length: 128,
-      },
-      second_name: {
-        type: "string",
-        description: "User second name",
-        example: "Dolor",
-        length: 128,
-      },
-      description: {
-        type: "string",
-        description: "User description",
-        example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        length: 200,
-      },
-      email: {
-        type: "string",
-        description: "User email",
-        example: "lorem@ipsum.com",
-      },
-      cv_link: {
-        type: "string",
-        description: "User cv link",
-        example: "https://www.xxxxx.com",
       },
       uuid: {
         type: "string",
@@ -65,44 +69,11 @@ export const allDataUserSwaggerSchema = {
 export const dataUserSwaggerSchema = {
   type: "object",
   properties: {
+    ...permanData,
     id: {
       type: "string",
       description: "User ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
-    name: {
-      type: "string",
-      description: "User name",
-      example: "Lorem",
-      length: 64,
-    },
-    first_name: {
-      type: "string",
-      description: "User first name",
-      example: "Impsum",
-      length: 128,
-    },
-    second_name: {
-      type: "string",
-      description: "User second name",
-      example: "Dolor",
-      length: 128,
-    },
-    description: {
-      type: "string",
-      description: "User description",
-      example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      length: 200,
-    },
-    email: {
-      type: "string",
-      description: "User email",
-      example: "lorem@ipsum.com",
-    },
-    cv_link: {
-      type: "string",
-      description: "User cv link",
-      example: "https://www.xxxxx.com",
     },
     uuid: {
       type: "string",
@@ -126,45 +97,28 @@ export const dataUserSwaggerSchema = {
 export const insertDataUserSwaggerSchema = {
   type: "object",
   properties: {
-    name: {
-      type: "string",
-      description: "User name",
-      example: "Lorem",
-      length: 64,
-    },
-    first_name: {
-      type: "string",
-      description: "User first name",
-      example: "Impsum",
-      length: 128,
-    },
-    second_name: {
-      type: "string",
-      description: "User second name",
-      example: "Dolor",
-      length: 128,
-    },
-    description: {
-      type: "string",
-      description: "User description",
-      example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      length: 200,
-    },
-    email: {
-      type: "string",
-      description: "User email",
-      example: "lorem@ipsum.com",
-    },
+    ...permanData,
     password: {
       type: "string",
       description: "User password",
       example: "*******",
       length: 32,
     },
-    cv_link: {
+  },
+};
+export const updateDataUserSwaggerSchema = {
+  type: "object",
+  properties: {
+    ...permanData,
+    id: {
       type: "string",
-      description: "User cv link",
-      example: "https://www.xxxxx.com",
+      description: "User ID",
+      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+    },
+    uuid: {
+      type: "string",
+      description: "User uuid",
+      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
   },
 };
