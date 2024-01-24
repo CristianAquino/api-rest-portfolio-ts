@@ -23,16 +23,16 @@ class Users extends BaseEntity {
   @Column({ type: "varchar", length: 64 })
   name: string;
 
-  @Column({ default: "", type: "varchar", length: 128 })
+  @Column({ type: "varchar", length: 128 })
   first_name: string;
 
-  @Column({ default: "", type: "varchar", length: 128 })
+  @Column({ type: "varchar", length: 128 })
   second_name: string;
 
-  @Column({ default: "", type: "varchar", length: 200 })
+  @Column({ type: "varchar", length: 200 })
   description: string;
 
-  @Column({ default: "", type: "varchar" })
+  @Column({ type: "varchar" })
   email: string;
 
   @Column({ type: "varchar", length: 32 })
