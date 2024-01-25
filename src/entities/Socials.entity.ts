@@ -29,10 +29,10 @@ class Socials extends BaseEntity {
   @ManyToOne(() => Users, (user) => user.social)
   user: Relation<Users>;
 
-  @CreateDateColumn({ type: "timestamp without time zone" })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamp without time zone" })
+  @UpdateDateColumn()
   updatedAd: Date;
 }
 

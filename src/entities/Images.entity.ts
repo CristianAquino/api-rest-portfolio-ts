@@ -20,10 +20,10 @@ class Images extends BaseEntity {
 
   // here relationship
 
-  @CreateDateColumn({ type: "timestamp without time zone" })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamp without time zone" })
+  @UpdateDateColumn()
   updatedAd: Date;
 }
 

@@ -8,9 +8,8 @@ import {
   Relation,
   UpdateDateColumn,
 } from "typeorm";
-import { Users } from "./Users.entity";
 import { Projects } from "./Projects.entity";
-import { TypeSkill } from "../types";
+import { Users } from "./Users.entity";
 
 @Entity({ name: "Skills" })
 class Skills extends BaseEntity {
@@ -23,8 +22,8 @@ class Skills extends BaseEntity {
   @Column({ type: "varchar" })
   icon: string;
 
-  @Column({ type: "enum", enum: TypeSkill, default: TypeSkill.LANGUAGES })
-  type: TypeSkill;
+  @Column({ type: "varchar" })
+  type: string;
 
   // here relationship
   // take other relationship
@@ -35,10 +34,10 @@ class Skills extends BaseEntity {
   @ManyToOne(() => Projects, (project) => project.skill)
   project: Relation<Projects>;
 
-  @CreateDateColumn({ type: "timestamp without time zone" })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamp without time zone" })
+  @UpdateDateColumn()
   updatedAd: Date;
 }
 
