@@ -16,6 +16,9 @@ app.use(express.json());
 
 // routes
 // app.use("/api/v1/auth", authRoute);
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World!" });
+});
 app.use("/api/v1/user", userRoute);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSetup));
 
