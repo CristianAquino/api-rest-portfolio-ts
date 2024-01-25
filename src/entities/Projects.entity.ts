@@ -47,10 +47,10 @@ class Projects extends BaseEntity {
   @OneToMany(() => Skills, (skill) => skill.project)
   skill: Relation<Skills>[];
 
-  @CreateDateColumn({ type: "timestamp without time zone" })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamp without time zone" })
+  @UpdateDateColumn()
   updatedAd: Date;
 }
 
