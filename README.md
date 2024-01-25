@@ -15,9 +15,11 @@
 :heavy_check_mark: configure ts-node-dev in the package.json, for which we add `"dev":"ts-node-dev --respawn src/index.ts"`  
 :heavy_check_mark: proceed to install the modules with `pnpm add typeorm reflect-metadata`  
 :heavy_check_mark: proceed to install the typescript dependencies with `pnpm add @types/node -D`
-:heavy_check_mark: proceed to install the database driver `pnpm add pg`  
+:heavy_check_mark: proceed to install the database driver `pnpm add pg sqlite3`, we will use sqlite3 to perform the tests  
 :heavy_check_mark: proceed to enable new configurations in tsconfig as `"experimentalDecorators": true`, `"strictPropertyInitialization": false` and `"emitDecoratorMetadata": true`
 :heavy_check_mark: proceed to install swagger `"pnpm add swagger-ui-express swagger-jsdoc"` and types `"pnpm add @types/swagger-ui-express @types/swagger-jsdoc -D"`
+:heavy_check_mark: proceed to install test `"pnpm add jest supertest ts-jest @types/jest @types/supertest -D"`
+:heavy_check_mark: proceed to configure jest for node, we can find this in the file `"jest.config.ts"`
 
 [TypeORM](https://typeorm.io/ "TypeORM")
 [Swagger](https://editor.swagger.io/ "Swagger")
