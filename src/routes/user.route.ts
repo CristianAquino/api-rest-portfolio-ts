@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { getOneUser, postCreateUser, putUpdateDataUser } from "../controllers";
+import { schemaValidator } from "../middlewares";
+import { CreateUserSchema } from "../schemas";
 
 const userRoute = Router();
 
@@ -41,15 +43,19 @@ userRoute.get("/", getOneUser);
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/DataUser'
+ *        $ref: '#/components/schemas/MessageResponse'
  *    400:
  *     description: invalid input
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/ErrorResponse'
  *    402:
  *     description: user already exists
  *    422:
  *     description: validation exception
  */
-userRoute.post("/", postCreateUser);
+userRoute.post("/", schemaValidator(CreateUserSchema), postCreateUser);
 /**
  *@swagger
  * /user:
