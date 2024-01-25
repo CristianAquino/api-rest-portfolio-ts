@@ -12,6 +12,7 @@ import {
   insertDataProjectSwaggerSchema,
   insertDataSkillSwaggerSchema,
   insertDataUserSwaggerSchema,
+  messageResponseSwaggerSchema,
   updateDataUserSwaggerSchema,
 } from "../swagger-schemas";
 import {
@@ -19,6 +20,7 @@ import {
   dataSocialSwaggerSchema,
   insertDataSocialSwaggerSchema,
 } from "../swagger-schemas/social_swagger.schema";
+import { errorResponseSwaggerSchema } from "../swagger-schemas/error_swagger.schema";
 /**
  *definition of doc API
  *
@@ -77,6 +79,10 @@ const swaggerDefinition: OAS3Definition = {
       AllDataSkill: allDataSkillSwaggerSchema,
       DataSkill: dataSkillSwaggerSchema,
       InsertSkill: insertDataSkillSwaggerSchema,
+      // message
+      MessageResponse: messageResponseSwaggerSchema,
+      // error
+      ErrorResponse: errorResponseSwaggerSchema,
     },
   },
 };
