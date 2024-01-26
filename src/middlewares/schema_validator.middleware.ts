@@ -9,6 +9,7 @@ export const schemaValidator =
         body: req.body,
         params: req.params,
         query: req.query,
+        headers: req.headers,
       });
       next();
     } catch (error) {
