@@ -1,31 +1,33 @@
 import { NextFunction, Request, Response } from "express";
-import { InsertDataUser, UpdateDataUser, UserInfo } from "../services";
-import { CreatedError } from "../utils";
+import { UpdateDataUser, UserInfo } from "../services";
 
-async function getOneUser(req: Request, res: Response) {
+async function getOneUser(req: Request, res: Response, next: NextFunction) {
   try {
+    // console.log(req.headers["authorization"]);
     const response = await UserInfo();
     return res.status(200).json(response);
-  } catch (error) {}
-}
-
-async function postCreateUser(req: Request, res: Response, next: NextFunction) {
-  try {
-    const response = await InsertDataUser(req.body);
-    return res.status(200).json({ message: response });
   } catch (error) {
     if (error instanceof Error) {
-      next(error);
+      return next(error);
     }
     return res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
-async function putUpdateDataUser(req: Request, res: Response) {
+async function putUpdateDataUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const response = await UpdateDataUser(req.body);
-    return res.status(200).json(response);
-  } catch (error) {}
+    return res.status(200).json({ message: response });
+  } catch (error) {
+    if (error instanceof Error) {
+      return next(error);
+    }
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 }
 
-export { getOneUser, postCreateUser, putUpdateDataUser };
+export { getOneUser, putUpdateDataUser };
