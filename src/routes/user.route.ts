@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getOneUser, postCreateUser, putUpdateDataUser } from "../controllers";
 import { schemaValidator } from "../middlewares";
-import { CreateUserSchema } from "../schemas";
+import { CreateUserSchema, UpdateUserSchema } from "../schemas";
 
 const userRoute = Router();
 
@@ -27,38 +27,6 @@ userRoute.get("/", getOneUser);
 /**
  *@swagger
  * /user:
- *  post:
- *   tags:
- *    - User
- *   summary: post user
- *   description: post user
- *   requestBody:
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/InsertUser'
- *   responses:
- *    201:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    400:
- *     description: invalid input
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
- *    402:
- *     description: user already exists
- *    422:
- *     description: validation exception
- */
-userRoute.post("/", schemaValidator(CreateUserSchema), postCreateUser);
-/**
- *@swagger
- * /user:
  *  put:
  *   tags:
  *    - User
@@ -75,14 +43,30 @@ userRoute.post("/", schemaValidator(CreateUserSchema), postCreateUser);
  *     content:
  *      application/json:
  *       schema:
- *        type: object
+ *        $ref: '#/components/schemas/ErrorResponse'
  *    400:
  *     description: invalid id user
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *    401:
+ *     description: unauthorized
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
  *    404:
  *     description: user not found
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
  *    422:
  *     description: validation exception
+ *   security:
+ *    - bearerAuth: []
  */
-userRoute.put("/", putUpdateDataUser);
+userRoute.put("/", schemaValidator(UpdateUserSchema), putUpdateDataUser);
 
 export { userRoute };
