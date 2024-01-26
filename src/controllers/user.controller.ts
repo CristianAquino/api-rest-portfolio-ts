@@ -3,7 +3,6 @@ import { UpdateDataUser, UserInfo } from "../services";
 
 async function getOneUser(req: Request, res: Response, next: NextFunction) {
   try {
-    // console.log(req.headers["authorization"]);
     const response = await UserInfo();
     return res.status(200).json(response);
   } catch (error) {
@@ -20,7 +19,8 @@ async function putUpdateDataUser(
   next: NextFunction
 ) {
   try {
-    const response = await UpdateDataUser(req.body);
+    const token = req.headers.authorization?.split(" ")[1] ?? " ";
+    const response = await UpdateDataUser({ data: req.body, token });
     return res.status(200).json({ message: response });
   } catch (error) {
     if (error instanceof Error) {
