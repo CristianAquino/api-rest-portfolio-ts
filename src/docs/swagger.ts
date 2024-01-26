@@ -9,10 +9,12 @@ import {
   dataSkillSwaggerSchema,
   dataUserSwaggerSchema,
   insertDataImageSwaggerSchema,
+  insertDataLogin,
   insertDataProjectSwaggerSchema,
   insertDataSkillSwaggerSchema,
   insertDataUserSwaggerSchema,
   messageResponseSwaggerSchema,
+  responseDataSuccessLogin,
   updateDataUserSwaggerSchema,
 } from "../swagger-schemas";
 import {
@@ -36,6 +38,10 @@ const swaggerDefinition: OAS3Definition = {
   servers: [{ url: "http://localhost:3000/api/v1" }],
   tags: [
     {
+      name: "Auth",
+      description: "Created a token",
+    },
+    {
       name: "User",
       description: "User information",
     },
@@ -58,6 +64,9 @@ const swaggerDefinition: OAS3Definition = {
   ],
   components: {
     schemas: {
+      // auth
+      LoginUser: insertDataLogin,
+      ResponseLogin: responseDataSuccessLogin,
       // user
       AllDataUser: allDataUserSwaggerSchema,
       DataUser: dataUserSwaggerSchema,
@@ -83,6 +92,17 @@ const swaggerDefinition: OAS3Definition = {
       MessageResponse: messageResponseSwaggerSchema,
       // error
       ErrorResponse: errorResponseSwaggerSchema,
+    },
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+        in: "header",
+        name: "Authorization",
+        description: "Bearer token",
+        example: "Bearer token",
+      },
     },
   },
 };
