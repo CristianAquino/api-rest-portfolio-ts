@@ -1,3 +1,5 @@
+export * from "./auth_swagger.schema";
+export * from "./error_swagger.schema";
 export * from "./image_swagger.schema";
 export * from "./message_swagger.schema";
 export * from "./project_swagger.schema";
