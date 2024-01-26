@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { UpdateUserSchema, UserLoginSchema } from "../schemas";
+import { LogoutUserSchema, UserLoginSchema } from "../schemas";
 
 type LoginType = z.infer<typeof UserLoginSchema>["body"];
-type HeadAuthorizationTye = z.infer<typeof UpdateUserSchema>["headers"];
+type HeadAuthorizationTye = z.infer<typeof LogoutUserSchema>["headers"];
 
 export { HeadAuthorizationTye, LoginType };
