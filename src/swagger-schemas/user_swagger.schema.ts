@@ -115,10 +115,5 @@ export const updateDataUserSwaggerSchema = {
       description: "User ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
-    uuid: {
-      type: "string",
-      description: "User uuid",
-      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
   },
 };
