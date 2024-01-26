@@ -1,7 +1,7 @@
 import { Users } from "../entities";
 import { UserDTO } from "../entities/DTO";
 import { UpdateUserDataType } from "../types";
-import { NotFoundError, UpdatedError } from "../utils";
+import { NotFoundError, UpdatedError, confirmToken } from "../utils";
 
 async function UserInfo() {
   const user = await Users.find();
@@ -9,11 +9,18 @@ async function UserInfo() {
   return userDTO;
 }
 
-async function UpdateDataUser(data: UpdateUserDataType) {
-  const { id, ...rest } = data;
-  const user = await Users.findOneBy({ id });
+async function UpdateDataUser({
+  data,
+  token,
+}: {
+  data: UpdateUserDataType;
+  token: string;
+}) {
+  const decode: any = confirmToken(token);
+  const { id: uuid } = decode;
+  const user = await Users.findOneBy({ uuid });
   if (!user) throw new NotFoundError("User not found");
-  const userUpdate = await Users.update(id, rest);
+  const userUpdate = await Users.update({ uuid }, data);
   if (userUpdate.affected === 0)
     throw new UpdatedError("Could not update the user");
   return "user updated";
