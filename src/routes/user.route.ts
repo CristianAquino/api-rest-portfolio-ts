@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getOneUser, postCreateUser, putUpdateDataUser } from "../controllers";
-import { schemaValidator } from "../middlewares";
+import { schemaValidator, verifyToken } from "../middlewares";
 import { CreateUserSchema, UpdateUserSchema } from "../schemas";
 
 const userRoute = Router();
@@ -67,6 +67,11 @@ userRoute.get("/", getOneUser);
  *   security:
  *    - bearerAuth: []
  */
-userRoute.put("/", schemaValidator(UpdateUserSchema), putUpdateDataUser);
+userRoute.put(
+  "/",
+  schemaValidator(UpdateUserSchema),
+  verifyToken,
+  putUpdateDataUser
+);
 
 export { userRoute };
