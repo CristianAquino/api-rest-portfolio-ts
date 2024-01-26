@@ -8,6 +8,12 @@ function validationError(type: string) {
     InvalidTokenError: {
       code: 498,
     },
+    JsonWebTokenError: {
+      code: 498,
+    },
+    TokenExpiredError: {
+      code: 498,
+    },
     CreatedError: {
       code: 500,
     },
