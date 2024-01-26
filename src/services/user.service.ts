@@ -11,13 +11,11 @@ async function UserInfo() {
 
 async function UpdateDataUser({
   data,
-  token,
+  uuid,
 }: {
   data: UpdateUserDataType;
-  token: string;
+  uuid: string;
 }) {
-  const decode: any = confirmToken(token);
-  const { id: uuid } = decode;
   const user = await Users.findOneBy({ uuid });
   if (!user) throw new NotFoundError("User not found");
   const userUpdate = await Users.update({ uuid }, data);

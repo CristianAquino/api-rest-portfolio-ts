@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { UpdateDataUser, UserInfo } from "../services";
+import { RequestExtens } from "../types";
 
 async function getOneUser(req: Request, res: Response, next: NextFunction) {
   try {
@@ -14,14 +15,16 @@ async function getOneUser(req: Request, res: Response, next: NextFunction) {
 }
 
 async function putUpdateDataUser(
-  req: Request,
+  req: RequestExtens<string>,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const token = req.headers.authorization?.split(" ")[1] ?? " ";
-    const response = await UpdateDataUser({ data: req.body, token });
-    return res.status(200).json({ message: response });
+    const { body, id } = req;
+    if (id) {
+      const response = await UpdateDataUser({ data: body, uuid: id });
+      return res.status(200).json({ message: response });
+    }
   } catch (error) {
     if (error instanceof Error) {
       return next(error);
