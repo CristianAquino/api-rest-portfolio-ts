@@ -1,5 +1,14 @@
+#dependencies
 node_modules/*
+
+#testing
 coverage/*
 
+#enviroment
 .env
+
+#db
+db.sqlite
+
+#logs
 src/logs
