@@ -57,7 +57,6 @@ export const CreateUserSchema = z.object({
 
 export const UpdateUserSchema = z.object({
   body: z.object({
-    id: z.string().uuid({ message: "invalid id" }),
     name: z
       .string({
         required_error: "name is required",
@@ -101,5 +100,19 @@ export const UpdateUserSchema = z.object({
       .regex(/^(http|https):\/\/[^\s/$.?#].[^\s]*$/gi, {
         message: "invalid route",
       }),
+  }),
+  headers: z.object({
+    authorization: z
+      .string({
+        required_error: "authorization is required",
+        invalid_type_error: "authorization must be a string",
+      })
+      .refine(
+        (value) => {
+          const head = value.split(" ")[0];
+          return head.toLocaleLowerCase() === "bearer" ? true : false;
+        },
+        { message: "authorization header is invalid" }
+      ),
   }),
 });
