@@ -21,6 +21,7 @@
     "jsonwebtoken": "9.0.2",
     "pg": "8.11.3",
     "reflect-metadata": "0.2.1",
+    "resend": "3.1.0",
     "sqlite3": "5.1.7",
     "swagger-jsdoc": "6.2.8",
     "swagger-ui-express": "5.0.0",
