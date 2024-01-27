@@ -2,6 +2,18 @@ import { errorType } from "../types";
 
 function validationError(type: string) {
   const dataError: errorType = {
+    NoContentError: {
+      code: 204,
+    },
+    InvalidIdError: {
+      code: 400,
+    },
+    UnauthorizedError: {
+      code: 401,
+    },
+    ResendEmailError: {
+      code: 403,
+    },
     NotFoundError: {
       code: 404,
     },

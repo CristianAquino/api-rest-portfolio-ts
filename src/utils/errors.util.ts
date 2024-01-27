@@ -32,3 +32,31 @@ export class InvalidTokenError extends Error {
     this.name = "InvalidTokenError";
   }
 }
+
+export class UnauthorizedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
+}
+
+export class ResendEmailError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ResendEmailError";
+  }
+}
+
+export class NoContentError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "NoContentError";
+  }
+}
+
+export class InvalidIdError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidIdError";
+  }
+}
