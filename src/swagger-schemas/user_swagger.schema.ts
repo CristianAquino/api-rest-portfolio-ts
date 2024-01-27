@@ -51,6 +51,11 @@ export const allDataUserSwaggerSchema = {
         description: "User uuid",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
+      code: {
+        type: "string",
+        description: "Code change password",
+        example: "1234",
+      },
       image: {
         $ref: "#/components/schemas/DataImage",
       },
@@ -79,6 +84,11 @@ export const dataUserSwaggerSchema = {
       type: "string",
       description: "User uuid",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+    },
+    code: {
+      type: "string",
+      description: "Code change password",
+      example: "1234",
     },
     image: {
       $ref: "#/components/schemas/DataImage",

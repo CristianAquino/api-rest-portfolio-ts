@@ -1,10 +1,12 @@
 import { Users } from "../entities";
 import { UserDTO } from "../entities/DTO";
 import { UpdateUserDataType } from "../types";
-import { NotFoundError, UpdatedError, confirmToken } from "../utils";
+import { NoContentError, NotFoundError, UpdatedError } from "../utils";
 
 async function UserInfo() {
   const user = await Users.find();
+  if (user.length == 0)
+    throw new NoContentError("No records have been created yet");
   const userDTO = user.map((user) => new UserDTO(user));
   return userDTO;
 }

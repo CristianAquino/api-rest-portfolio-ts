@@ -8,6 +8,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   Relation,
+  Unique,
   UpdateDateColumn,
 } from "typeorm";
 import { Images } from "./Images.entity";
@@ -16,6 +17,7 @@ import { Projects } from "./Projects.entity";
 import { Skills } from "./Skills.entity";
 
 @Entity({ name: "Users" })
+// @Unique(["email"])
 class Users extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -42,7 +44,10 @@ class Users extends BaseEntity {
   cv_link: string;
 
   @Column({ type: "varchar", nullable: true })
-  uuid: string;
+  uuid: string | null;
+
+  @Column({ type: "varchar", length: 4, nullable: true })
+  code: string | null;
 
   // here relationship
   @OneToOne(() => Images)
