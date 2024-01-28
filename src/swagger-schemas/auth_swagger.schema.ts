@@ -22,7 +22,31 @@ export const responseDataSuccessLogin = {
       type: "string",
       description: "Bearer token",
       example:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzUwMjUwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYw",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xMzUwMjUwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYwMjYw",
+    },
+  },
+};
+
+export const changePasswordUser = {
+  type: "object",
+  properties: {
+    code: {
+      type: "string",
+      description: "Code",
+      example: "1234",
+      length: 4,
+    },
+    oldpassword: {
+      type: "string",
+      description: "Old password",
+      example: "********",
+      length: 32,
+    },
+    newpassword: {
+      type: "string",
+      description: "Old password",
+      example: "********",
+      length: 32,
     },
   },
 };
