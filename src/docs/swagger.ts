@@ -4,6 +4,7 @@ import {
   allDataProjectSwaggerSchema,
   allDataSkillSwaggerSchema,
   allDataUserSwaggerSchema,
+  changePasswordUser,
   dataImageSwaggerSchema,
   dataProjectSwaggerSchema,
   dataSkillSwaggerSchema,
@@ -67,6 +68,7 @@ const swaggerDefinition: OAS3Definition = {
       // auth
       LoginUser: insertDataLogin,
       ResponseLogin: responseDataSuccessLogin,
+      ChangePassword: changePasswordUser,
       // user
       AllDataUser: allDataUserSwaggerSchema,
       DataUser: dataUserSwaggerSchema,
