@@ -4,10 +4,10 @@
   "description": "rest api for the portfolio, where information will be obtained and created regarding the user, projects and skills they have",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc && cp src/templates/send-email-bill.ejs dist/templates",
-    "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=test ts-node-dev --respawn src/index.ts",
+    "build": "cross-env NODE_ENV=build tsc && cp src/templates/send-email-bill.ejs dist/templates",
+    "start": "cross-env NODE_ENV=build node dist/index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,8 @@
     "jsonwebtoken": "9.0.2",
     "pg": "8.11.3",
     "reflect-metadata": "0.2.1",
+    "resend": "3.1.0",
+    "sqlite3": "5.1.7",
     "swagger-jsdoc": "6.2.8",
     "swagger-ui-express": "5.0.0",
     "typeorm": "0.3.19",
@@ -32,10 +34,16 @@
     "@types/cors": "2.8.17",
     "@types/dotenv": "8.2.0",
     "@types/express": "4.17.21",
+    "@types/jest": "29.5.11",
     "@types/jsonwebtoken": "9.0.5",
     "@types/node": "20.11.5",
+    "@types/supertest": "6.0.2",
     "@types/swagger-jsdoc": "6.0.4",
     "@types/swagger-ui-express": "4.1.6",
+    "cross-env": "7.0.3",
+    "jest": "29.7.0",
+    "supertest": "6.3.4",
+    "ts-jest": "29.1.2",
     "ts-node-dev": "2.0.0",
     "typescript": "5.3.3"
   }
