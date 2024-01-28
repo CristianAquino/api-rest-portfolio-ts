@@ -51,6 +51,11 @@ export const allDataUserSwaggerSchema = {
         description: "User uuid",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
+      code: {
+        type: "string",
+        description: "Code change password",
+        example: "1234",
+      },
       image: {
         $ref: "#/components/schemas/DataImage",
       },
@@ -80,6 +85,11 @@ export const dataUserSwaggerSchema = {
       description: "User uuid",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
+    code: {
+      type: "string",
+      description: "Code change password",
+      example: "1234",
+    },
     image: {
       $ref: "#/components/schemas/DataImage",
     },
@@ -101,7 +111,7 @@ export const insertDataUserSwaggerSchema = {
     password: {
       type: "string",
       description: "User password",
-      example: "*******",
+      example: "********",
       length: 32,
     },
   },
@@ -110,15 +120,5 @@ export const updateDataUserSwaggerSchema = {
   type: "object",
   properties: {
     ...permanData,
-    id: {
-      type: "string",
-      description: "User ID",
-      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
-    uuid: {
-      type: "string",
-      description: "User uuid",
-      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
   },
 };
