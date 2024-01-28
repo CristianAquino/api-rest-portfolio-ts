@@ -12,7 +12,8 @@ export class UserDTO {
   description: string;
   email: string;
   cv_link: string;
-  uuid: string;
+  uuid: string | null;
+  code: string | null;
   image: Images;
   social: Socials[];
   project: Projects[];
@@ -27,6 +28,7 @@ export class UserDTO {
     this.email = user.email;
     this.cv_link = user.cv_link;
     this.uuid = user.uuid;
+    this.code = user.code;
     this.image = user.image;
     this.social = user.social;
     this.project = user.project;

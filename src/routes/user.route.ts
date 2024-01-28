@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { getOneUser, postCreateUser, putUpdateDataUser } from "../controllers";
+import { getOneUser, putUpdateDataUser } from "../controllers";
+import { schemaValidator, verifyToken } from "../middlewares";
+import { UpdateUserSchema } from "../schemas";
 
 const userRoute = Router();
 
@@ -18,38 +20,14 @@ const userRoute = Router();
  *      application/json:
  *       schema:
  *        $ref: '#/components/schemas/AllDataUser'
- *    400:
- *     description: Bad request
- */
-userRoute.get("/", getOneUser);
-/**
- *@swagger
- * /user:
- *  post:
- *   tags:
- *    - User
- *   summary: post user
- *   description: post user
- *   requestBody:
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/InsertUser'
- *   responses:
- *    201:
- *     description: successful operation
+ *    204:
+ *     description: No content
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/DataUser'
- *    400:
- *     description: invalid input
- *    402:
- *     description: user already exists
- *    422:
- *     description: validation exception
+ *        $ref: '#/components/schemas/MessageResponse'
  */
-userRoute.post("/", postCreateUser);
+userRoute.get("/", getOneUser);
 /**
  *@swagger
  * /user:
@@ -64,19 +42,43 @@ userRoute.post("/", postCreateUser);
  *      schema:
  *       $ref: '#/components/schemas/UpdateUser'
  *   responses:
- *    202:
+ *    200:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        type: object
+ *        $ref: '#/components/schemas/MessageResponse'
  *    400:
  *     description: invalid id user
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
+ *    401:
+ *     description: unauthorized
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
  *    404:
  *     description: user not found
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
  *    422:
  *     description: validation exception
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/ErrorResponse'
+ *   security:
+ *    - bearerAuth: []
  */
-userRoute.put("/", putUpdateDataUser);
+userRoute.put(
+  "/",
+  [schemaValidator(UpdateUserSchema), verifyToken],
+  putUpdateDataUser
+);
 
 export { userRoute };
