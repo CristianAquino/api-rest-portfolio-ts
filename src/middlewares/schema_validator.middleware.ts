@@ -16,7 +16,7 @@ export const schemaValidator =
       if (error instanceof ZodError) {
         return res.status(422).json(
           error.issues.map((issue) => ({
-            path: issue.path,
+            path: issue.path[1],
             message: issue.message,
           }))
         );
