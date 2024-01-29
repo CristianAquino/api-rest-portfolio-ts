@@ -1,7 +1,6 @@
 import { Images, Users } from "../entities";
 import { UserDTO } from "../entities/DTO";
-import { ParamsType, UpdateUserDataType } from "../types";
-import { ImageType } from "../types/image.type";
+import { ImageType, ParamsType, UpdateUserDataType } from "../types";
 import { NoContentError, NotFoundError, UpdatedError } from "../utils";
 
 async function UserInfo() {
@@ -49,12 +48,15 @@ async function UpdateImageUser({ uuid, data }: ParamsType<ImageType>) {
   if (!user) throw new NotFoundError("User not found");
   const image = await Images.findOneBy({ id: user.image.id });
   if (!image) throw new NotFoundError("Image not found");
-  image.thumbnail = data.thumbnail;
-  image.small = "";
-  const newImage = await image.save();
-  user.image = newImage;
-  await user.save();
-
+  const imageUpdate = await Images.update(
+    { id: user.image.id },
+    {
+      thumbnail: data.thumbnail,
+      small: "",
+    }
+  );
+  if (imageUpdate.affected === 0)
+    throw new UpdatedError("Could not update the user");
   return "image update";
 }
 
