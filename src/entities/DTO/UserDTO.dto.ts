@@ -1,4 +1,4 @@
-import { Images } from "../Images.entity";
+import { ImagesDTO } from ".";
 import { Projects } from "../Projects.entity";
 import { Skills } from "../Skills.entity";
 import { Socials } from "../Socials.entity";
@@ -14,7 +14,7 @@ export class UserDTO {
   cv_link: string;
   uuid: string | null;
   code: string | null;
-  image: Images;
+  image: ImagesDTO;
   social: Socials[];
   project: Projects[];
   skill: Skills[];
@@ -29,7 +29,11 @@ export class UserDTO {
     this.cv_link = user.cv_link;
     this.uuid = user.uuid;
     this.code = user.code;
-    this.image = user.image;
+    if (user.image) {
+      this.image = new ImagesDTO(user.image);
+    } else {
+      this.image = user.image;
+    }
     this.social = user.social;
     this.project = user.project;
     this.skill = user.skill;
