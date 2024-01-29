@@ -33,9 +33,10 @@ export const dataImageSwaggerSchema = {
 export const insertDataImageSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
-    user: {
-      $ref: "#/components/schemas/DataUser",
+    thumbnail: {
+      type: "string",
+      description: "Image thumbnail",
+      example: "https://example.com/thumbnail.jpg",
     },
   },
 };
