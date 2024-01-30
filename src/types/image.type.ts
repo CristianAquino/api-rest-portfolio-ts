@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { CreateUserImageSchema } from "../schemas/image.schema";
+import { BaseDataImageSchema } from "../schemas/image.schema";
 
-type ImageType = z.infer<typeof CreateUserImageSchema>["body"];
+type ImageType = z.infer<typeof BaseDataImageSchema>;
 
 export { ImageType };
