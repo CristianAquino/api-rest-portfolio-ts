@@ -74,12 +74,12 @@ export const allDataUserSwaggerSchema = {
 export const dataUserSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
     id: {
       type: "string",
       description: "User ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
+    ...permanData,
     uuid: {
       type: "string",
       description: "User uuid",

@@ -17,12 +17,11 @@ import {
   messageResponseSwaggerSchema,
   responseDataSuccessLogin,
   updateDataUserSwaggerSchema,
-} from "../swagger-schemas";
-import {
   allDataSocialSwaggerSchema,
   dataSocialSwaggerSchema,
   insertDataSocialSwaggerSchema,
-} from "../swagger-schemas/social_swagger.schema";
+  updateDataSocialSwaggerSchema,
+} from "../swagger-schemas";
 import { errorResponseSwaggerSchema } from "../swagger-schemas/error_swagger.schema";
 /**
  *definition of doc API
@@ -82,6 +81,7 @@ const swaggerDefinition: OAS3Definition = {
       AllDataSocial: allDataSocialSwaggerSchema,
       DataSocial: dataSocialSwaggerSchema,
       InsertSocial: insertDataSocialSwaggerSchema,
+      UpdateSocial: updateDataSocialSwaggerSchema,
       // project
       AllDataProject: allDataProjectSwaggerSchema,
       DataProject: dataProjectSwaggerSchema,
