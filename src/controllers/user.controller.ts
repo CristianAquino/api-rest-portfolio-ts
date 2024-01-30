@@ -74,7 +74,7 @@ async function putUploadImageUser(
   try {
     const { body, id } = req;
     if (id) {
-      const response = await UpdateImageUser({ data: body, uuid: id });
+      const response = await UpdateImageUser({ data: body });
       return res.status(200).json({ message: response });
     } else {
       throw new UnauthorizedError(
