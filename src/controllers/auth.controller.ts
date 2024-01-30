@@ -7,6 +7,7 @@ import {
   changePassword,
 } from "../services";
 import { RequestExtens } from "../types";
+import { UnauthorizedError } from "../utils";
 
 async function postLoginUser(req: Request, res: Response, next: NextFunction) {
   try {
@@ -42,6 +43,10 @@ async function getLogoutUser(
     if (id) {
       const response = await removeLoginUser({ uuid: id });
       return res.status(200).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -61,6 +66,10 @@ async function postCodeChangePassword(
     if (id) {
       const response = await generateCodeChangePassword({ uuid: id });
       return res.status(201).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -80,6 +89,10 @@ async function putChangePassword(
     if (id) {
       const response = await changePassword({ uuid: id, data: req.body });
       return res.status(201).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
     }
   } catch (error) {
     if (error instanceof Error) {

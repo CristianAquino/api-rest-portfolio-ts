@@ -6,6 +6,7 @@ import {
   UserInfo,
 } from "../services";
 import { RequestExtens } from "../types";
+import { UnauthorizedError } from "../utils";
 
 async function getOneUser(req: Request, res: Response, next: NextFunction) {
   try {
@@ -29,6 +30,10 @@ async function putUpdateDataUser(
     if (id) {
       const response = await UpdateDataUser({ data: body, uuid: id });
       return res.status(200).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -48,6 +53,10 @@ async function postUploadImageUser(
     if (id) {
       const response = await UploadImageUser({ data: body, uuid: id });
       return res.status(200).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -67,6 +76,10 @@ async function putUploadImageUser(
     if (id) {
       const response = await UpdateImageUser({ data: body, uuid: id });
       return res.status(200).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
     }
   } catch (error) {
     if (error instanceof Error) {
