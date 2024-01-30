@@ -13,7 +13,7 @@ const permanData = {
   type: {
     type: "string",
     description: "Skill type",
-    example: "LANGUAGES",
+    example: "language",
   },
 };
 export const allDataSkillSwaggerSchema = {
@@ -21,35 +21,38 @@ export const allDataSkillSwaggerSchema = {
   items: {
     type: "object",
     properties: {
-      ...permanData,
       id: {
         type: "string",
         description: "User ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
+      ...permanData,
     },
   },
 };
 export const dataSkillSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
     id: {
       type: "string",
       description: "User ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
+    ...permanData,
   },
 };
 export const insertDataSkillSwaggerSchema = {
-  type: "object",
-  properties: {
-    ...permanData,
-    user: {
-      $ref: "#/components/schemas/DataUser",
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      ...permanData,
     },
-    project: {
-      $ref: "#/components/schemas/DataProject",
-    },
+  },
+};
+export const updateDataSkillSwaggerSchema = {
+  type: "array",
+  items: {
+    ...dataSkillSwaggerSchema,
   },
 };
