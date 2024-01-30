@@ -2,6 +2,13 @@ import { z } from "zod";
 import { BaseHeaderSchema } from "./auth.schema";
 
 export const BaseDataImageSchema = z.object({
+  id: z
+    .string({
+      required_error: "id is required",
+      invalid_type_error: "id must be a string",
+    })
+    .trim()
+    .uuid({ message: "invalid format" }),
   thumbnail: z
     .string({
       required_error: "thumbnail link is required",
