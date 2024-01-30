@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerSetup from "./docs/swagger";
-import { authRoute, userRoute, imageRoute } from "./routes";
+import { authRoute, userRoute, imageRoute, socialRoute } from "./routes";
 import { handleError } from "./middlewares";
 const app = express();
 
@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/image", imageRoute);
+app.use("/api/v1/social", socialRoute);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSetup));
 
 // errors
