@@ -1,6 +1,6 @@
 export enum TypeSkill {
-  LANGUAGES = "languages",
-  FRAMEWORKS = "frameworks",
-  CLOUDS = "clouds",
-  TOOLS = "tools",
+  LANGUAGE = "language",
+  FRAMEWORK = "framework",
+  CLOUD = "cloud",
+  TOOL = "tool",
 }
