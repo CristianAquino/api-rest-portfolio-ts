@@ -15,12 +15,12 @@ export const allDataImageSwaggerSchema = {
   items: {
     type: "object",
     properties: {
-      ...permanData,
       id: {
         type: "string",
         description: "User ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
+      ...permanData,
     },
   },
 };
@@ -33,6 +33,11 @@ export const dataImageSwaggerSchema = {
 export const insertDataImageSwaggerSchema = {
   type: "object",
   properties: {
+    id: {
+      type: "string",
+      description: "User ID",
+      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+    },
     thumbnail: {
       type: "string",
       description: "Image thumbnail",

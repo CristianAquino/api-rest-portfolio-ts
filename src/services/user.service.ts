@@ -40,22 +40,26 @@ async function UploadImageUser({ uuid, data }: ParamsType<ImageType>) {
   return "image upload";
 }
 
-async function UpdateImageUser({ uuid, data }: ParamsType<ImageType>) {
-  const user = await Users.createQueryBuilder("users")
-    .innerJoinAndSelect("users.image", "images")
-    .where("users.uuid = :uuid", { uuid })
-    .getOne();
-  if (!user) throw new NotFoundError("User not found");
-  const image = await Images.findOneBy({ id: user.image.id });
+async function UpdateImageUser({ data }: Pick<ParamsType<ImageType>, "data">) {
+  // const user = await Users.createQueryBuilder("users")
+  //   .innerJoinAndSelect("users.image", "images")
+  //   .where("users.uuid = :uuid", { uuid })
+  //   .getOne();
+  // if (!user) throw new NotFoundError("User not found");
+  // const image = await Images.findOneBy({ id: user.image.id });
+  // if (!image) throw new NotFoundError("Image not found");
+  // const imageUpdate = await Images.update(
+  //   { id: user.image.id },
+  //   {
+  //     thumbnail: data.thumbnail,
+  //     small: "",
+  //   }
+  // );
+  const { id, ...sf } = data;
+  const image = await Images.findOneBy({ id });
   if (!image) throw new NotFoundError("Image not found");
-  const imageUpdate = await Images.update(
-    { id: user.image.id },
-    {
-      thumbnail: data.thumbnail,
-      small: "",
-    }
-  );
-  if (imageUpdate.affected === 0)
+  const updateIMG = await Images.update({ id }, { ...sf });
+  if (updateIMG.affected === 0)
     throw new UpdatedError("Could not update the user");
   return "image update";
 }

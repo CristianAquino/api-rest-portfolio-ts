@@ -5,7 +5,7 @@ const imageRoute = Router();
 
 /**
  *@swagger
- * /image:
+ * /image/all-image:
  *  get:
  *   tags:
  *    - Image
@@ -25,6 +25,6 @@ const imageRoute = Router();
  *       schema:
  *        $ref: '#/components/schemas/MessageResponse'
  */
-imageRoute.get("/", getAllImage);
+imageRoute.get("/all-image", getAllImage);
 
 export { imageRoute };

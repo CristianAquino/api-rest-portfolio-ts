@@ -1,5 +1,21 @@
 import { z } from "zod";
 
+export const BaseHeaderSchema = z.object({
+  authorization: z
+    .string({
+      required_error: "authorization is required",
+      invalid_type_error: "authorization must be a string",
+    })
+    .trim()
+    .refine(
+      (value) => {
+        const head = value.split(" ")[0];
+        return head.toLocaleLowerCase() === "bearer" ? true : false;
+      },
+      { message: "authorization header is invalid" }
+    ),
+});
+
 export const UserLoginSchema = z.object({
   body: z.object({
     email: z
@@ -17,20 +33,7 @@ export const UserLoginSchema = z.object({
 });
 
 export const HeaderValidateSchema = z.object({
-  headers: z.object({
-    authorization: z
-      .string({
-        required_error: "authorization is required",
-        invalid_type_error: "authorization must be a string",
-      })
-      .refine(
-        (value) => {
-          const head = value.split(" ")[0];
-          return head.toLocaleLowerCase() === "bearer" ? true : false;
-        },
-        { message: "authorization header is invalid" }
-      ),
-  }),
+  headers: BaseHeaderSchema,
 });
 
 export const ChangeUserPasswordSchema = z.object({
@@ -38,6 +41,7 @@ export const ChangeUserPasswordSchema = z.object({
     .object({
       code: z
         .string({ required_error: "code is required" })
+        .trim()
         .regex(/^\d{4}$/gi, { message: "invalid code" }),
       oldpassword: z
         .string({
@@ -58,25 +62,18 @@ export const ChangeUserPasswordSchema = z.object({
       message: "New password must be different from old password",
       path: ["newpassword"],
     }),
-  headers: z.object({
-    authorization: z
-      .string({
-        required_error: "authorization is required",
-        invalid_type_error: "authorization must be a string",
-      })
-      .refine(
-        (value) => {
-          const head = value.split(" ")[0];
-          return head.toLocaleLowerCase() === "bearer" ? true : false;
-        },
-        { message: "authorization header is invalid" }
-      ),
-  }),
+  headers: BaseHeaderSchema,
 });
 
-export const IdentifierIdSchema = z
-  .string({
-    required_error: "id is required",
-    invalid_type_error: "id must be a string",
-  })
-  .uuid({ message: "invalid format" });
+export const IdentifierIdSchema = z.object({
+  params: z.object({
+    id: z
+      .string({
+        required_error: "id is required",
+        invalid_type_error: "id must be a string",
+      })
+      .trim()
+      .uuid({ message: "invalid format" }),
+  }),
+  headers: BaseHeaderSchema,
+});

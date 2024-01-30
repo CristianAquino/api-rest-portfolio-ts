@@ -1,31 +1,30 @@
 import { Router } from "express";
 import {
-  getOneUser,
-  postUploadImageUser,
-  putUpdateDataUser,
-  putUploadImageUser,
+  deleteSocialUser,
+  getAllSocial,
+  postCreateUserSocial,
+  putUpdateSocialUser,
 } from "../controllers";
 import { schemaValidator, verifyToken } from "../middlewares";
-import { UpdateUserSchema } from "../schemas";
-import { CreateUserImageSchema } from "../schemas/image.schema";
+import { CreateSocialSchema, IdentifierIdSchema } from "../schemas";
 
-const userRoute = Router();
+const socialRoute = Router();
 
 /**
  *@swagger
- * /user/one-user:
+ * /social/all-social:
  *  get:
  *   tags:
- *    - User
- *   summary: get user
- *   description: get user
+ *    - Social
+ *   summary: social user
+ *   description: social user
  *   responses:
  *    200:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/AllDataUser'
+ *        $ref: '#/components/schemas/AllDataSocial'
  *    204:
  *     description: No content
  *     content:
@@ -33,74 +32,21 @@ const userRoute = Router();
  *       schema:
  *        $ref: '#/components/schemas/MessageResponse'
  */
-userRoute.get("/one-user", getOneUser);
+socialRoute.get("/all-social", getAllSocial);
 
 /**
  *@swagger
- * /user/update-user:
- *  put:
- *   tags:
- *    - User
- *   summary: put user
- *   description: put user
- *   requestBody:
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/UpdateUser'
- *   responses:
- *    200:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    400:
- *     description: invalid id user
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    401:
- *     description: unauthorized
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    404:
- *     description: user not found
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    422:
- *     description: validation exception
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
- *   security:
- *    - bearerAuth: []
- */
-userRoute.put(
-  "/update-user",
-  [schemaValidator(UpdateUserSchema), verifyToken],
-  putUpdateDataUser
-);
-
-/**
- *@swagger
- * /user/upload-image:
+ * /social/create-social:
  *  post:
  *   tags:
- *    - User
- *   summary: upload image user
- *   description: upload image user
+ *    - Social
+ *   summary: post user social
+ *   description: post user social
  *   requestBody:
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/InsertImage'
+ *       $ref: '#/components/schemas/InsertSocial'
  *   responses:
  *    201:
  *     description: successful operation
@@ -108,20 +54,8 @@ userRoute.put(
  *      application/json:
  *       schema:
  *        $ref: '#/components/schemas/MessageResponse'
- *    400:
- *     description: invalid id user
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    401:
- *     description: unauthorized
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
- *    404:
- *     description: user not found
+ *    402:
+ *     description: user already exists
  *     content:
  *      application/json:
  *       schema:
@@ -132,28 +66,34 @@ userRoute.put(
  *      application/json:
  *       schema:
  *        $ref: '#/components/schemas/ErrorResponse'
+ *    500:
+ *     description: error to created new user
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
  *   security:
  *    - bearerAuth: []
  */
-userRoute.post(
-  "/upload-image",
-  [schemaValidator(CreateUserImageSchema), verifyToken],
-  postUploadImageUser
+socialRoute.post(
+  "/create-social",
+  [schemaValidator(CreateSocialSchema), verifyToken],
+  postCreateUserSocial
 );
 
 /**
  *@swagger
- * /user/update-image:
+ * /social/update-social:
  *  put:
  *   tags:
- *    - User
- *   summary: put user
- *   description: put user
+ *    - Social
+ *   summary: put user social
+ *   description: put user social
  *   requestBody:
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/InsertImage'
+ *       $ref: '#/components/schemas/UpdateSocial'
  *   responses:
  *    200:
  *     description: successful operation
@@ -188,9 +128,66 @@ userRoute.post(
  *   security:
  *    - bearerAuth: []
  */
-userRoute.put(
-  "/update-image",
-  [schemaValidator(CreateUserImageSchema), verifyToken],
-  putUploadImageUser
+socialRoute.put(
+  "/update-social",
+  [schemaValidator(CreateSocialSchema), verifyToken],
+  putUpdateSocialUser
 );
-export { userRoute };
+
+/**
+ *@swagger
+ * /social/delete-social/{id}:
+ *  delete:
+ *   tags:
+ *    - Social
+ *   summary: delete user social
+ *   description: delete user social
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      description: social id to delete
+ *      required: true
+ *      schema:
+ *       type: string
+ *       format: uuid
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
+ *    400:
+ *     description: invalid id user
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
+ *    401:
+ *     description: unauthorized
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
+ *    404:
+ *     description: user not found
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponse'
+ *    422:
+ *     description: validation exception
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/ErrorResponse'
+ *   security:
+ *    - bearerAuth: []
+ */
+socialRoute.delete(
+  "/delete-social/:id",
+  [schemaValidator(IdentifierIdSchema), verifyToken],
+  deleteSocialUser
+);
+
+export { socialRoute };

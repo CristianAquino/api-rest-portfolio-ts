@@ -1,4 +1,4 @@
-import { ImagesDTO } from ".";
+import { ImagesDTO, SocialDTO } from ".";
 import { Projects } from "../Projects.entity";
 import { Skills } from "../Skills.entity";
 import { Socials } from "../Socials.entity";
@@ -15,7 +15,7 @@ export class UserDTO {
   uuid: string | null;
   code: string | null;
   image: ImagesDTO;
-  social: Socials[];
+  social: SocialDTO[];
   project: Projects[];
   skill: Skills[];
 
@@ -34,7 +34,7 @@ export class UserDTO {
     } else {
       this.image = user.image;
     }
-    this.social = user.social;
+    this.social = user.social.map((s) => new SocialDTO(s));
     this.project = user.project;
     this.skill = user.skill;
   }

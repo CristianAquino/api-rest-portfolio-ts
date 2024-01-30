@@ -22,32 +22,38 @@ export const allDataSocialSwaggerSchema = {
   items: {
     type: "object",
     properties: {
-      ...permanData,
       id: {
         type: "string",
         description: "User ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
+      ...permanData,
     },
   },
 };
 export const dataSocialSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
     id: {
       type: "string",
       description: "User ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
+    ...permanData,
   },
 };
 export const insertDataSocialSwaggerSchema = {
-  type: "object",
-  properties: {
-    ...permanData,
-    user: {
-      $ref: "#/components/schemas/DataUser",
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      ...permanData,
     },
+  },
+};
+export const updateDataSocialSwaggerSchema = {
+  type: "array",
+  items: {
+    ...dataSocialSwaggerSchema,
   },
 };
