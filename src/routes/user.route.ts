@@ -13,7 +13,7 @@ const userRoute = Router();
 
 /**
  *@swagger
- * /user:
+ * /user/one-user:
  *  get:
  *   tags:
  *    - User
@@ -33,11 +33,11 @@ const userRoute = Router();
  *       schema:
  *        $ref: '#/components/schemas/MessageResponse'
  */
-userRoute.get("/", getOneUser);
+userRoute.get("/one-user", getOneUser);
 
 /**
  *@swagger
- * /user:
+ * /user/update-user:
  *  put:
  *   tags:
  *    - User
@@ -83,7 +83,7 @@ userRoute.get("/", getOneUser);
  *    - bearerAuth: []
  */
 userRoute.put(
-  "/",
+  "/update-user",
   [schemaValidator(UpdateUserSchema), verifyToken],
   putUpdateDataUser
 );
