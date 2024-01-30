@@ -6,6 +6,7 @@ export const BaseHeaderSchema = z.object({
       required_error: "authorization is required",
       invalid_type_error: "authorization must be a string",
     })
+    .trim()
     .refine(
       (value) => {
         const head = value.split(" ")[0];
@@ -40,6 +41,7 @@ export const ChangeUserPasswordSchema = z.object({
     .object({
       code: z
         .string({ required_error: "code is required" })
+        .trim()
         .regex(/^\d{4}$/gi, { message: "invalid code" }),
       oldpassword: z
         .string({
@@ -63,9 +65,15 @@ export const ChangeUserPasswordSchema = z.object({
   headers: BaseHeaderSchema,
 });
 
-export const IdentifierIdSchema = z
-  .string({
-    required_error: "id is required",
-    invalid_type_error: "id must be a string",
-  })
-  .uuid({ message: "invalid format" });
+export const IdentifierIdSchema = z.object({
+  params: z.object({
+    id: z
+      .string({
+        required_error: "id is required",
+        invalid_type_error: "id must be a string",
+      })
+      .trim()
+      .uuid({ message: "invalid format" }),
+  }),
+  headers: BaseHeaderSchema,
+});
