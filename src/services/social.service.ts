@@ -28,15 +28,13 @@ async function updateDataSocial({
 }: Pick<ParamsType<SocialUpdateType>, "data">) {
   let notfound: string[] = [];
   for (const item of data) {
-    const social = await Socials.findOneBy({ id: item.id });
+    const { id, ...sf } = item;
+    const social = await Socials.findOneBy({ id });
     if (!social) {
       notfound.push(item.id);
       continue;
     }
-    social.name = item.name;
-    social.link = item.link;
-    social.color = item.color;
-    await social.save();
+    await Socials.update({ id }, { ...sf });
   }
   if (notfound.length == 0) {
     return "updated social";
