@@ -1,7 +1,5 @@
-import { ImagesDTO, SocialDTO } from ".";
+import { ImagesDTO, SkillDTO, SocialDTO } from ".";
 import { Projects } from "../Projects.entity";
-import { Skills } from "../Skills.entity";
-import { Socials } from "../Socials.entity";
 import { Users } from "../Users.entity";
 
 export class UserDTO {
@@ -17,7 +15,7 @@ export class UserDTO {
   image: ImagesDTO;
   social: SocialDTO[];
   project: Projects[];
-  skill: Skills[];
+  skill: SkillDTO[];
 
   constructor(user: Users) {
     this.id = user.id;
@@ -36,6 +34,6 @@ export class UserDTO {
     }
     this.social = user.social.map((s) => new SocialDTO(s));
     this.project = user.project;
-    this.skill = user.skill;
+    this.skill = user.skill.map((s) => new SkillDTO(s));
   }
 }
