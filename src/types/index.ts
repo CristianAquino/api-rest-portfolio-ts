@@ -1,6 +1,7 @@
 export * from "./auth.type";
 export * from "./error.type";
 export * from "./image.type";
+export * from "./project.type";
 export * from "./request.type";
 export * from "./skill.type";
 export * from "./skill_enum.type";
