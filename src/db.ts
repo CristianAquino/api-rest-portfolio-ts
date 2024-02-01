@@ -8,23 +8,34 @@ const conn = {
   entities: [Users, Images, Projects, Skills, Socials],
   synchronize: true,
 };
-const connDB = NODE_ENV === "test";
+
 let AppDataSource: DataSource;
-if (connDB) {
-  AppDataSource = new DataSource({
-    type: "sqlite",
-    database: "db.sqlite",
-    ...conn,
-  });
-} else {
-  AppDataSource = new DataSource({
-    type: "postgres",
-    host: HOST_DB as string,
-    port: Number(PORT_DB),
-    username: USERNAME_DB as string,
-    password: PASSWORD_DB as string,
-    database: DATABASE_DB as string,
-    ...conn,
-  });
+
+switch (NODE_ENV) {
+  case "test":
+    AppDataSource = new DataSource({
+      type: "sqlite",
+      database: "db-test.sqlite",
+      ...conn,
+    });
+    break;
+  case "dev":
+    AppDataSource = new DataSource({
+      type: "sqlite",
+      database: "db-dev.sqlite",
+      ...conn,
+    });
+    break;
+  default:
+    AppDataSource = new DataSource({
+      type: "postgres",
+      host: HOST_DB as string,
+      port: Number(PORT_DB),
+      username: USERNAME_DB as string,
+      password: PASSWORD_DB as string,
+      database: DATABASE_DB as string,
+      ...conn,
+    });
 }
+
 export { AppDataSource };
