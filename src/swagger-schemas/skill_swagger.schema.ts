@@ -16,32 +16,32 @@ const permanData = {
     example: "language",
   },
 };
-export const allDataSkillSwaggerSchema = {
+export const AllDataSkillSwaggerSchema = {
   type: "array",
   items: {
     type: "object",
     properties: {
       id: {
         type: "string",
-        description: "User ID",
+        description: "Skill ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
       ...permanData,
     },
   },
 };
-export const dataSkillSwaggerSchema = {
+export const OneDataSkillSwaggerSchema = {
   type: "object",
   properties: {
     id: {
       type: "string",
-      description: "User ID",
+      description: "Skill ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
     ...permanData,
   },
 };
-export const insertDataSkillSwaggerSchema = {
+export const InsertDataSkillSwaggerSchema = {
   type: "array",
   items: {
     type: "object",
@@ -50,9 +50,9 @@ export const insertDataSkillSwaggerSchema = {
     },
   },
 };
-export const updateDataSkillSwaggerSchema = {
+export const UpdateDataSkillSwaggerSchema = {
   type: "array",
   items: {
-    ...dataSkillSwaggerSchema,
+    ...OneDataSkillSwaggerSchema,
   },
 };

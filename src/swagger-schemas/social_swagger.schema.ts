@@ -3,7 +3,7 @@ const permanData = {
     type: "string",
     description: "Social name",
     example: "Facebook",
-    length: 128,
+    length: 64,
   },
   link: {
     type: "string",
@@ -17,7 +17,7 @@ const permanData = {
     length: 8,
   },
 };
-export const allDataSocialSwaggerSchema = {
+export const AllDataSocialUserSwaggerSchema = {
   type: "array",
   items: {
     type: "object",
@@ -31,18 +31,18 @@ export const allDataSocialSwaggerSchema = {
     },
   },
 };
-export const dataSocialSwaggerSchema = {
+export const OneDataSocialUserSwaggerSchema = {
   type: "object",
   properties: {
     id: {
       type: "string",
-      description: "User ID",
+      description: "Social ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
     ...permanData,
   },
 };
-export const insertDataSocialSwaggerSchema = {
+export const InsertDataSocialUserSwaggerSchema = {
   type: "array",
   items: {
     type: "object",
@@ -51,9 +51,9 @@ export const insertDataSocialSwaggerSchema = {
     },
   },
 };
-export const updateDataSocialSwaggerSchema = {
+export const UpdateDataSocialUserSwaggerSchema = {
   type: "array",
   items: {
-    ...dataSocialSwaggerSchema,
+    ...OneDataSocialUserSwaggerSchema,
   },
 };

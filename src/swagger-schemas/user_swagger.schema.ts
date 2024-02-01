@@ -23,11 +23,6 @@ const permanData = {
     example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     length: 200,
   },
-  email: {
-    type: "string",
-    description: "User email",
-    example: "lorem@ipsum.com",
-  },
   cv_link: {
     type: "string",
     description: "User cv link",
@@ -42,11 +37,16 @@ export const AllDataUserSwaggerSchema = {
   items: {
     type: "object",
     properties: {
-      ...permanData,
       id: {
         type: "string",
         description: "User ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+      },
+      ...permanData,
+      email: {
+        type: "string",
+        description: "User email",
+        example: "lorem@ipsum.com",
       },
       uuid: {
         type: "string",
@@ -59,10 +59,10 @@ export const AllDataUserSwaggerSchema = {
         example: "1234",
       },
       image: {
-        $ref: "#/components/schemas/DataImage",
+        $ref: "#/components/schemas/OneDataImage",
       },
       social: {
-        $ref: "#/components/schemas/AllDataSocial",
+        $ref: "#/components/schemas/AllDataSocialUser",
       },
       skill: {
         $ref: "#/components/schemas/AllDataSkill",
@@ -80,6 +80,11 @@ export const DataUserSwaggerSchema = {
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
     ...permanData,
+    email: {
+      type: "string",
+      description: "User email",
+      example: "lorem@ipsum.com",
+    },
     uuid: {
       type: "string",
       description: "User uuid",
@@ -91,10 +96,10 @@ export const DataUserSwaggerSchema = {
       example: "1234",
     },
     image: {
-      $ref: "#/components/schemas/DataImage",
+      $ref: "#/components/schemas/OneDataImage",
     },
     social: {
-      $ref: "#/components/schemas/AllDataSocial",
+      $ref: "#/components/schemas/AllDataSocialUser",
     },
     skill: {
       $ref: "#/components/schemas/AllDataSkill",
@@ -105,6 +110,11 @@ export const SignupDataUserSwaggerSchema = {
   type: "object",
   properties: {
     ...permanData,
+    email: {
+      type: "string",
+      description: "User email",
+      example: "lorem@ipsum.com",
+    },
     password: {
       type: "string",
       description: "User password",
