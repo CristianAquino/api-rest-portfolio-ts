@@ -3,13 +3,15 @@ import { UserDTO } from "../entities/DTO";
 import { ImageType, ParamsType, UpdateUserDataType } from "../types";
 import { NoContentError, NotFoundError, UpdatedError } from "../utils";
 
+// se realizan dos llamadas
+// 1. Obtener todos los usuarios
+// 2. Obtener los projectos
 async function UserInfo() {
   const user = await Users.find({
     relations: {
       image: true,
-      social: true,
-      project: true,
-      skill: true,
+      socials: true,
+      skills: true,
     },
   });
   if (user.length == 0)
@@ -32,7 +34,6 @@ async function UploadImageUser({ uuid, data }: ParamsType<ImageType>) {
   if (!user) throw new NotFoundError("User not found");
   const image = new Images();
   image.thumbnail = data.thumbnail;
-  image.small = "";
   const newImage = await image.save();
   user.image = newImage;
   await user.save();
@@ -55,12 +56,12 @@ async function UpdateImageUser({ data }: Pick<ParamsType<ImageType>, "data">) {
   //     small: "",
   //   }
   // );
-  const { id, ...sf } = data;
-  const image = await Images.findOneBy({ id });
-  if (!image) throw new NotFoundError("Image not found");
-  const updateIMG = await Images.update({ id }, { ...sf });
-  if (updateIMG.affected === 0)
-    throw new UpdatedError("Could not update the user");
+  // const { id, ...sf } = data;
+  // const image = await Images.findOneBy({ id });
+  // if (!image) throw new NotFoundError("Image not found");
+  // const updateIMG = await Images.update({ id }, { ...sf });
+  // if (updateIMG.affected === 0)
+  //   throw new UpdatedError("Could not update the user");
   return "image update";
 }
 

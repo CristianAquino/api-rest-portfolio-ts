@@ -9,7 +9,7 @@ const conn = {
   synchronize: true,
 };
 const connDB = NODE_ENV === "test";
-let AppDataSource: any;
+let AppDataSource: DataSource;
 if (connDB) {
   AppDataSource = new DataSource({
     type: "sqlite",

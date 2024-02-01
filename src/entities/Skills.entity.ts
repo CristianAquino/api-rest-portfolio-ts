@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   Relation,
@@ -11,7 +12,7 @@ import {
 import { Projects } from "./Projects.entity";
 import { Users } from "./Users.entity";
 
-@Entity({ name: "Skills" })
+@Entity({ name: "Skills", orderBy: { createdAt: "DESC" } })
 class Skills extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -27,12 +28,12 @@ class Skills extends BaseEntity {
 
   // here relationship
   // take other relationship
-  @ManyToOne(() => Users, (user) => user.skill)
+  @ManyToOne(() => Users, (user) => user.skills)
   user: Relation<Users>;
 
   // take other relationship
-  @ManyToOne(() => Projects, (project) => project.skill)
-  project: Relation<Projects>;
+  @ManyToMany(() => Projects, (project) => project.skills)
+  project: Relation<Projects>[];
 
   @CreateDateColumn()
   createdAt: Date;

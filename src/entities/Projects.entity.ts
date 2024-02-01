@@ -4,22 +4,21 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   Relation,
   UpdateDateColumn,
 } from "typeorm";
 import { Images } from "./Images.entity";
-import { Users } from "./Users.entity";
 import { Skills } from "./Skills.entity";
+import { Users } from "./Users.entity";
 
 @Entity({
   name: "Projects",
-  orderBy: {
-    CreateDateColumn: "DESC",
-  },
+  orderBy: { createdAt: "DESC" },
 })
 class Projects extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
@@ -40,12 +39,13 @@ class Projects extends BaseEntity {
   image: Relation<Images>;
 
   // take other relationship
-  @ManyToOne(() => Users, (user) => user.project)
+  @ManyToOne(() => Users, (user) => user.projects)
   user: Relation<Users>;
 
   // take other relationship
-  @OneToMany(() => Skills, (skill) => skill.project)
-  skill: Relation<Skills>[];
+  @ManyToMany(() => Skills, (skill) => skill.project)
+  @JoinTable()
+  skills: Relation<Skills>[];
 
   @CreateDateColumn()
   createdAt: Date;

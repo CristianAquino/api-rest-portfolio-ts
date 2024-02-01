@@ -16,7 +16,7 @@ import { Socials } from "./Socials.entity";
 import { Projects } from "./Projects.entity";
 import { Skills } from "./Skills.entity";
 
-@Entity({ name: "Users" })
+@Entity({ name: "Users", orderBy: { createdAt: "DESC" } })
 // @Unique(["email"])
 class Users extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
@@ -56,15 +56,15 @@ class Users extends BaseEntity {
 
   // take other relationship
   @OneToMany(() => Socials, (social) => social.user)
-  social: Relation<Socials>[];
+  socials: Relation<Socials>[];
 
   // take other relationship
   @OneToMany(() => Projects, (project) => project.user)
-  project: Relation<Projects>[];
+  projects: Relation<Projects>[];
 
   // take other relationship
   @OneToMany(() => Skills, (skill) => skill.user)
-  skill: Relation<Skills>[];
+  skills: Relation<Skills>[];
 
   @CreateDateColumn()
   createdAt: Date;

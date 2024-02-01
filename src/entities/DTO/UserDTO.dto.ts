@@ -32,8 +32,8 @@ export class UserDTO {
     } else {
       this.image = user.image;
     }
-    this.social = user.social.map((s) => new SocialDTO(s));
-    this.project = user.project;
-    this.skill = user.skill.map((s) => new SkillDTO(s));
+    this.social = user.socials.map((s) => new SocialDTO(s));
+    this.project = user.projects;
+    this.skill = user.skills.map((s) => new SkillDTO(s));
   }
 }
