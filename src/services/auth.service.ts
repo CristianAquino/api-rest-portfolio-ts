@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Users } from "../entities";
+import { Images, Users } from "../entities";
 import {
   ChangePasswordUserType,
   ParamsType,
@@ -45,6 +45,7 @@ async function signupUserService({
   data,
 }: Pick<ParamsType<SignupUserType>, "data">) {
   const user = new Users();
+  const image = new Images();
   const hashPassword = await encryptPassword(data.password);
   user.name = data.name;
   user.first_name = data.first_name;
@@ -53,6 +54,7 @@ async function signupUserService({
   user.email = data.email;
   user.password = hashPassword;
   user.cv_link = data.cv_link;
+  user.image = image;
 
   const newUser = await user.save();
 

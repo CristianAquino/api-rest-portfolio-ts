@@ -1,16 +1,20 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  UpdateDataUser,
   UpdateImageUser,
   UploadImageUser,
-  UserInfo,
+  oneUserService,
+  updateDataUserService,
 } from "../services";
 import { RequestExtens } from "../types";
 import { UnauthorizedError } from "../utils";
 
-async function getOneUser(req: Request, res: Response, next: NextFunction) {
+async function getOneUserController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
-    const response = await UserInfo();
+    const response = await oneUserService();
     return res.status(200).json(response);
   } catch (error) {
     if (error instanceof Error) {
@@ -20,7 +24,7 @@ async function getOneUser(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function putUpdateDataUser(
+async function putUpdateDataUserController(
   req: RequestExtens<string>,
   res: Response,
   next: NextFunction
@@ -28,7 +32,7 @@ async function putUpdateDataUser(
   try {
     const { body, id } = req;
     if (id) {
-      const response = await UpdateDataUser({ data: body, uuid: id });
+      const response = await updateDataUserService({ data: body, uuid: id });
       return res.status(200).json({ message: response });
     } else {
       throw new UnauthorizedError(
@@ -42,7 +46,8 @@ async function putUpdateDataUser(
     return res.status(500).json({ message: "Internal Server Error" });
   }
 }
-
+// pensar si la imagen colocar a parte
+// como en projects
 async function postUploadImageUser(
   req: RequestExtens<string>,
   res: Response,
@@ -89,8 +94,8 @@ async function putUploadImageUser(
   }
 }
 export {
-  getOneUser,
-  putUpdateDataUser,
+  getOneUserController,
   postUploadImageUser,
+  putUpdateDataUserController,
   putUploadImageUser,
 };
