@@ -9,7 +9,7 @@ export class UserDTO {
   second_name: string;
   description: string;
   email: string;
-  cv_link: string;
+  cv_link: string | null;
   uuid: string | null;
   code: string | null;
   image: ImagesDTO;
