@@ -46,6 +46,7 @@ async function signupUserService({
 }: Pick<ParamsType<SignupUserType>, "data">) {
   const user = new Users();
   const image = new Images();
+
   const hashPassword = await encryptPassword(data.password);
   user.name = data.name;
   user.first_name = data.first_name;
@@ -54,7 +55,7 @@ async function signupUserService({
   user.email = data.email;
   user.password = hashPassword;
   user.cv_link = data.cv_link;
-  user.image = image;
+  user.image = await image.save();
 
   const newUser = await user.save();
 

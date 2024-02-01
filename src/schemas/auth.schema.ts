@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export const id = z
+  .string({
+    required_error: "id is required",
+    invalid_type_error: "id must be a string",
+  })
+  .trim()
+  .uuid({ message: "invalid format" });
+
 export const BaseAuthorizationUserSchema = z.object({
   authorization: z
     .string({
@@ -67,13 +75,7 @@ export const ChangePasswordUserSchema = z.object({
 
 export const IdentifierIdSchema = z.object({
   params: z.object({
-    id: z
-      .string({
-        required_error: "id is required",
-        invalid_type_error: "id must be a string",
-      })
-      .trim()
-      .uuid({ message: "invalid format" }),
+    id,
   }),
   headers: BaseAuthorizationUserSchema,
 });
