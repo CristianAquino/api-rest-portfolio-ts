@@ -2,7 +2,7 @@ import { Images } from "../Images.entity";
 
 export class ImagesDTO {
   id: string;
-  thumbnail: string;
+  thumbnail: string | null;
   small: string;
 
   constructor(image: Images) {
