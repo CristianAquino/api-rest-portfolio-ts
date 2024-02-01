@@ -1,30 +1,30 @@
 import swaggerJSDoc, { OAS3Definition, OAS3Options } from "swagger-jsdoc";
 import {
+  AllDataUserSwaggerSchema,
+  ChangePasswordUserSwaggerSchema,
+  DataUserSwaggerSchema,
+  MessageResponseActionUserSwaggerSchema,
+  SigninUserSwaggerSchema,
+  SignupDataUserSwaggerSchema,
+  TokenSigninUserSwaggerSchema,
+  UpdateDataUserSwaggerSchema,
   allDataImageSwaggerSchema,
   allDataProjectSwaggerSchema,
   allDataSkillSwaggerSchema,
-  allDataUserSwaggerSchema,
-  changePasswordUser,
+  allDataSocialSwaggerSchema,
   dataImageSwaggerSchema,
   dataProjectSwaggerSchema,
   dataSkillSwaggerSchema,
-  dataUserSwaggerSchema,
+  dataSocialSwaggerSchema,
   insertDataImageSwaggerSchema,
-  insertDataLogin,
   insertDataProjectSwaggerSchema,
   insertDataSkillSwaggerSchema,
-  insertDataUserSwaggerSchema,
-  messageResponseSwaggerSchema,
-  responseDataSuccessLogin,
-  updateDataUserSwaggerSchema,
-  allDataSocialSwaggerSchema,
-  dataSocialSwaggerSchema,
   insertDataSocialSwaggerSchema,
-  updateDataSocialSwaggerSchema,
-  updateDataSkillSwaggerSchema,
   updateDataProjectSwaggerSchema,
+  updateDataSkillSwaggerSchema,
+  updateDataSocialSwaggerSchema,
 } from "../swagger-schemas";
-import { errorResponseSwaggerSchema } from "../swagger-schemas/error_swagger.schema";
+import { ErrorMessageInputDataUserSwaggerSchema } from "../swagger-schemas/error_swagger.schema";
 /**
  *definition of doc API
  *
@@ -67,14 +67,14 @@ const swaggerDefinition: OAS3Definition = {
   components: {
     schemas: {
       // auth
-      LoginUser: insertDataLogin,
-      ResponseLogin: responseDataSuccessLogin,
-      ChangePassword: changePasswordUser,
+      SigninUser: SigninUserSwaggerSchema,
+      TokenSigninUser: TokenSigninUserSwaggerSchema,
+      ChangePasswordUser: ChangePasswordUserSwaggerSchema,
       // user
-      AllDataUser: allDataUserSwaggerSchema,
-      DataUser: dataUserSwaggerSchema,
-      InsertUser: insertDataUserSwaggerSchema,
-      UpdateUser: updateDataUserSwaggerSchema,
+      AllDataUser: AllDataUserSwaggerSchema,
+      DataUser: DataUserSwaggerSchema,
+      SignupDataUser: SignupDataUserSwaggerSchema,
+      UpdateDataUser: UpdateDataUserSwaggerSchema,
       // image
       AllDataImage: allDataImageSwaggerSchema,
       DataImage: dataImageSwaggerSchema,
@@ -95,9 +95,9 @@ const swaggerDefinition: OAS3Definition = {
       InsertSkill: insertDataSkillSwaggerSchema,
       UpdateSkill: updateDataSkillSwaggerSchema,
       // message
-      MessageResponse: messageResponseSwaggerSchema,
+      MessageResponseActionUser: MessageResponseActionUserSwaggerSchema,
       // error
-      ErrorResponse: errorResponseSwaggerSchema,
+      ErrorMessageInputDataUser: ErrorMessageInputDataUserSwaggerSchema,
     },
     securitySchemes: {
       bearerAuth: {
