@@ -22,6 +22,7 @@ import {
   insertDataSocialSwaggerSchema,
   updateDataSocialSwaggerSchema,
   updateDataSkillSwaggerSchema,
+  updateDataProjectSwaggerSchema,
 } from "../swagger-schemas";
 import { errorResponseSwaggerSchema } from "../swagger-schemas/error_swagger.schema";
 /**
@@ -87,6 +88,7 @@ const swaggerDefinition: OAS3Definition = {
       AllDataProject: allDataProjectSwaggerSchema,
       DataProject: dataProjectSwaggerSchema,
       InsertProject: insertDataProjectSwaggerSchema,
+      UpdateProject: updateDataProjectSwaggerSchema,
       // skill
       AllDataSkill: allDataSkillSwaggerSchema,
       DataSkill: dataSkillSwaggerSchema,
