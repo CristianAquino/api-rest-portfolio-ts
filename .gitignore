@@ -13,6 +13,8 @@ coverage/*
 
 #db
 db.sqlite
+db-test.sqlite
+db-dev.sqlite
 
 
 #logs
