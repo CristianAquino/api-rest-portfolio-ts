@@ -1,13 +1,11 @@
 import { Router } from "express";
 import {
   getOneUserController,
-  postUploadImageUser,
   putUpdateDataUserController,
-  putUploadImageUser,
+  putUpdateImageUserController,
 } from "../controllers";
 import { schemaValidator, verifyToken } from "../middlewares";
-import { UpdateDataUserSchema } from "../schemas";
-import { CreateUserImageSchema } from "../schemas/image.schema";
+import { SendDataImageSchema, UpdateDataUserSchema } from "../schemas";
 
 const userRoute = Router();
 
@@ -37,12 +35,12 @@ userRoute.get("/one-user", getOneUserController);
 
 /**
  *@swagger
- * /user/update-user:
+ * /user/update-data-user:
  *  put:
  *   tags:
  *    - User
- *   summary: put user
- *   description: put user
+ *   summary: put data user
+ *   description: put data user
  *   requestBody:
  *    content:
  *     application/json:
@@ -90,60 +88,7 @@ userRoute.put(
 
 /**
  *@swagger
- * /user/upload-image:
- *  post:
- *   tags:
- *    - User
- *   summary: upload image user
- *   description: upload image user
- *   requestBody:
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/InsertImage'
- *   responses:
- *    201:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *    400:
- *     description: invalid id user
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *    401:
- *     description: unauthorized
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *    404:
- *     description: user not found
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *    422:
- *     description: validation exception
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
- *   security:
- *    - bearerAuth: []
- */
-userRoute.post(
-  "/upload-image",
-  [schemaValidator(CreateUserImageSchema), verifyToken],
-  postUploadImageUser
-);
-
-/**
- *@swagger
- * /user/update-image:
+ * /user/update-image-user:
  *  put:
  *   tags:
  *    - User
@@ -153,7 +98,7 @@ userRoute.post(
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/InsertImage'
+ *       $ref: '#/components/schemas/SendDataImage'
  *   responses:
  *    200:
  *     description: successful operation
@@ -189,8 +134,8 @@ userRoute.post(
  *    - bearerAuth: []
  */
 userRoute.put(
-  "/update-image",
-  [schemaValidator(CreateUserImageSchema), verifyToken],
-  putUploadImageUser
+  "/update-image-user",
+  [schemaValidator(SendDataImageSchema), verifyToken],
+  putUpdateImageUserController
 );
 export { userRoute };

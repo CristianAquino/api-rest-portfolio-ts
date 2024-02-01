@@ -39,45 +39,39 @@ async function updateDataUserService({
   return "user updated";
 }
 
-async function UploadImageUser({ uuid, data }: ParamsType<ImageType>) {
-  const user = await Users.findOneBy({ uuid });
+// async function UploadImageUser({ uuid, data }: ParamsType<ImageType>) {
+//   const user = await Users.findOneBy({ uuid });
+//   if (!user) throw new NotFoundError("User not found");
+//   const image = new Images();
+//   image.thumbnail = data.thumbnail;
+//   const newImage = await image.save();
+//   user.image = newImage;
+//   await user.save();
+
+//   return "image upload";
+// }
+
+async function UpdateImageUserService({ uuid, data }: ParamsType<ImageType>) {
+  const { id, ...sf } = data;
+  const user = await Users.createQueryBuilder("users")
+    .innerJoinAndSelect("users.image", "images")
+    .where("users.uuid = :uuid", { uuid })
+    .getOne();
+
   if (!user) throw new NotFoundError("User not found");
-  const image = new Images();
-  image.thumbnail = data.thumbnail;
-  const newImage = await image.save();
-  user.image = newImage;
-  await user.save();
+  if (user.image.id !== id) throw new NotFoundError("Image not found");
 
-  return "image upload";
-}
+  const imageUpdate = await Images.update({ id }, sf);
 
-async function UpdateImageUser({ data }: Pick<ParamsType<ImageType>, "data">) {
-  // const user = await Users.createQueryBuilder("users")
-  //   .innerJoinAndSelect("users.image", "images")
-  //   .where("users.uuid = :uuid", { uuid })
-  //   .getOne();
-  // if (!user) throw new NotFoundError("User not found");
-  // const image = await Images.findOneBy({ id: user.image.id });
-  // if (!image) throw new NotFoundError("Image not found");
-  // const imageUpdate = await Images.update(
-  //   { id: user.image.id },
-  //   {
-  //     thumbnail: data.thumbnail,
-  //     small: "",
-  //   }
-  // );
-  // const { id, ...sf } = data;
-  // const image = await Images.findOneBy({ id });
-  // if (!image) throw new NotFoundError("Image not found");
-  // const updateIMG = await Images.update({ id }, { ...sf });
-  // if (updateIMG.affected === 0)
-  //   throw new UpdatedError("Could not update the user");
+  if (imageUpdate.affected === 0)
+    throw new UpdatedError("Could not update the user image");
+
   return "image update";
 }
 
 export {
-  UpdateImageUser,
-  UploadImageUser,
+  UpdateImageUserService,
+  // UploadImageUser,
   oneUserService,
   updateDataUserService,
 };

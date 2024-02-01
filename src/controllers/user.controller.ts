@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  UpdateImageUser,
-  UploadImageUser,
+  UpdateImageUserService,
   oneUserService,
   updateDataUserService,
 } from "../services";
@@ -48,30 +47,30 @@ async function putUpdateDataUserController(
 }
 // pensar si la imagen colocar a parte
 // como en projects
-async function postUploadImageUser(
-  req: RequestExtens<string>,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const { body, id } = req;
-    if (id) {
-      const response = await UploadImageUser({ data: body, uuid: id });
-      return res.status(200).json({ message: response });
-    } else {
-      throw new UnauthorizedError(
-        "You do not have permissions to perform this action"
-      );
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-}
+// async function postUploadImageUser(
+//   req: RequestExtens<string>,
+//   res: Response,
+//   next: NextFunction
+// ) {
+//   try {
+//     const { body, id } = req;
+//     if (id) {
+//       const response = await UploadImageUser({ data: body, uuid: id });
+//       return res.status(200).json({ message: response });
+//     } else {
+//       throw new UnauthorizedError(
+//         "You do not have permissions to perform this action"
+//       );
+//     }
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       return next(error);
+//     }
+//     return res.status(500).json({ message: "Internal Server Error" });
+//   }
+// }
 
-async function putUploadImageUser(
+async function putUpdateImageUserController(
   req: RequestExtens<string>,
   res: Response,
   next: NextFunction
@@ -79,7 +78,7 @@ async function putUploadImageUser(
   try {
     const { body, id } = req;
     if (id) {
-      const response = await UpdateImageUser({ data: body });
+      const response = await UpdateImageUserService({ data: body, uuid: id });
       return res.status(200).json({ message: response });
     } else {
       throw new UnauthorizedError(
@@ -95,7 +94,7 @@ async function putUploadImageUser(
 }
 export {
   getOneUserController,
-  postUploadImageUser,
+  // postUploadImageUser,
   putUpdateDataUserController,
-  putUploadImageUser,
+  putUpdateImageUserController,
 };
