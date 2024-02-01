@@ -15,7 +15,7 @@ class Socials extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "varchar", length: 128 })
+  @Column({ type: "varchar", length: 64 })
   name: string;
 
   @Column({ type: "varchar" })

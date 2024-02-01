@@ -14,9 +14,9 @@ class Images extends BaseEntity {
 
   @Column({
     type: "varchar",
-    nullable: true,
+    default: "https://i.postimg.cc/9F9sqtGV/thumbnail.png",
   })
-  thumbnail: string | null;
+  thumbnail: string;
 
   @Column({
     type: "varchar",
