@@ -1,9 +1,9 @@
 import { z } from "zod";
 import {
-  BaseHeaderSchema,
-  ChangeUserPasswordSchema,
+  BaseAuthorizationUserSchema,
+  ChangePasswordUserSchema,
   IdentifierIdSchema,
-  UserLoginSchema,
+  SigninUserSchema,
 } from "../schemas";
 
 type ParamsType<T> = {
@@ -11,15 +11,15 @@ type ParamsType<T> = {
   uuid: string;
 };
 
-type LoginType = z.infer<typeof UserLoginSchema>["body"];
-type HeaderAuthorizationTye = z.infer<typeof BaseHeaderSchema>;
-type ChangePasswordType = z.infer<typeof ChangeUserPasswordSchema>["body"];
-type IdType = z.infer<typeof IdentifierIdSchema>["params"];
+type SigninUserType = z.infer<typeof SigninUserSchema>["body"];
+type HeaderAuthorizationUserTye = z.infer<typeof BaseAuthorizationUserSchema>;
+type ChangePasswordUserType = z.infer<typeof ChangePasswordUserSchema>["body"];
+type IdentifierIdType = z.infer<typeof IdentifierIdSchema>["params"];
 
 export {
-  ChangePasswordType,
-  HeaderAuthorizationTye,
-  LoginType,
+  ChangePasswordUserType,
+  HeaderAuthorizationUserTye,
+  IdentifierIdType,
   ParamsType,
-  IdType,
+  SigninUserType,
 };
