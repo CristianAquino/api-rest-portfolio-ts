@@ -1,4 +1,4 @@
-export const errorResponseSwaggerSchema = {
+export const ErrorMessageInputDataUserSwaggerSchema = {
   type: "array",
   items: {
     type: "object",

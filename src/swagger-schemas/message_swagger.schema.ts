@@ -1,9 +1,9 @@
-export const messageResponseSwaggerSchema = {
+export const MessageResponseActionUserSwaggerSchema = {
   type: "object",
   properties: {
     message: {
       type: "string",
-      example: "Hello World!",
+      example: "result of the action taken",
     },
   },
 };
