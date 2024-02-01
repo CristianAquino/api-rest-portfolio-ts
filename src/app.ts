@@ -9,6 +9,7 @@ import {
   imageRoute,
   socialRoute,
   skillRoute,
+  projectRoute,
 } from "./routes";
 import { handleError } from "./middlewares";
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/image", imageRoute);
 app.use("/api/v1/social", socialRoute);
 app.use("/api/v1/skill", skillRoute);
+app.use("/api/v1/project", projectRoute);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSetup));
 
 // errors
