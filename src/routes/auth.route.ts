@@ -1,17 +1,17 @@
 import { Router } from "express";
 import {
-  getLogoutUser,
-  postCodeChangePassword,
-  postCreateUser,
-  postLoginUser,
-  putChangePassword,
+  getLogoutUserController,
+  postCodeChangePasswordUserController,
+  postSigninUserController,
+  postSignupUserController,
+  putChangePasswordUserController,
 } from "../controllers";
 import { schemaValidator, verifyToken } from "../middlewares";
 import {
-  ChangeUserPasswordSchema,
-  CreateUserSchema,
-  HeaderValidateSchema,
-  UserLoginSchema,
+  ChangePasswordUserSchema,
+  HeaderAuthorizationUserSchema,
+  SigninUserSchema,
+  SignupUserSchema,
 } from "../schemas";
 
 const authRoute = Router();
@@ -22,40 +22,44 @@ const authRoute = Router();
  *  post:
  *   tags:
  *    - Auth
- *   summary: created a token
- *   description: token for login
+ *   summary: post for signin user
+ *   description: insert data for signin user and have token of access
  *   requestBody:
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/LoginUser'
+ *       $ref: '#/components/schemas/SigninUser'
  *   responses:
  *    200:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ResponseLogin'
+ *        $ref: '#/components/schemas/TokenSigninUser'
  *    404:
  *     description: email or password incorrect
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *    500:
  *     description: error to created token
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  */
-authRoute.post("/signin", schemaValidator(UserLoginSchema), postLoginUser);
+authRoute.post(
+  "/signin",
+  schemaValidator(SigninUserSchema),
+  postSigninUserController
+);
 
 /**
  *@swagger
@@ -63,40 +67,44 @@ authRoute.post("/signin", schemaValidator(UserLoginSchema), postLoginUser);
  *  post:
  *   tags:
  *    - Auth
- *   summary: post user
- *   description: post user
+ *   summary: post for create user
+ *   description: insert data for signup user
  *   requestBody:
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/InsertUser'
+ *       $ref: '#/components/schemas/SignupDataUser'
  *   responses:
  *    201:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    402:
  *     description: user already exists
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *    500:
  *     description: error to created new user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  */
-authRoute.post("/signup", schemaValidator(CreateUserSchema), postCreateUser);
+authRoute.post(
+  "/signup",
+  schemaValidator(SignupUserSchema),
+  postSignupUserController
+);
 
 /**
  *@swagger
@@ -111,26 +119,26 @@ authRoute.post("/signup", schemaValidator(CreateUserSchema), postCreateUser);
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
 authRoute.get(
   "/logout",
-  [schemaValidator(HeaderValidateSchema), verifyToken],
-  getLogoutUser
+  [schemaValidator(HeaderAuthorizationUserSchema), verifyToken],
+  getLogoutUserController
 );
 
 /**
@@ -146,32 +154,32 @@ authRoute.get(
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    403:
  *     description: resend error to send email
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
 authRoute.post(
   "/code-change-password",
-  [schemaValidator(HeaderValidateSchema), verifyToken],
-  postCodeChangePassword
+  [schemaValidator(HeaderAuthorizationUserSchema), verifyToken],
+  postCodeChangePasswordUserController
 );
 
 /**
@@ -186,32 +194,32 @@ authRoute.post(
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/ChangePassword'
+ *       $ref: '#/components/schemas/ChangePasswordUser'
  *   responses:
  *    201:
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
 authRoute.put(
   "/change-password",
-  [schemaValidator(ChangeUserPasswordSchema), verifyToken],
-  putChangePassword
+  [schemaValidator(ChangePasswordUserSchema), verifyToken],
+  putChangePasswordUserController
 );
 
 export { authRoute };
