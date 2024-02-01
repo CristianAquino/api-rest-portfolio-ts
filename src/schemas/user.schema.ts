@@ -48,8 +48,17 @@ export const BaseDataUserSchema = z.object({
 });
 
 export const CreateUserSchema = z.object({
-  body: z.object({
-    ...BaseDataUserSchema.shape,
+  // body: z.object({
+  //   ...BaseDataUserSchema.shape,
+  //   password: z
+  //     .string({
+  //       required_error: "password is required",
+  //     })
+  //     .trim()
+  //     .min(8, { message: "min length must be 8" })
+  //     .max(32, { message: "max length must be 32" }),
+  // }),
+  body: BaseDataUserSchema.extend({
     password: z
       .string({
         required_error: "password is required",
