@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const BaseHeaderSchema = z.object({
+export const BaseAuthorizationUserSchema = z.object({
   authorization: z
     .string({
       required_error: "authorization is required",
@@ -16,7 +16,7 @@ export const BaseHeaderSchema = z.object({
     ),
 });
 
-export const UserLoginSchema = z.object({
+export const SigninUserSchema = z.object({
   body: z.object({
     email: z
       .string({ required_error: "email is required" })
@@ -32,11 +32,11 @@ export const UserLoginSchema = z.object({
   }),
 });
 
-export const HeaderValidateSchema = z.object({
-  headers: BaseHeaderSchema,
+export const HeaderAuthorizationUserSchema = z.object({
+  headers: BaseAuthorizationUserSchema,
 });
 
-export const ChangeUserPasswordSchema = z.object({
+export const ChangePasswordUserSchema = z.object({
   body: z
     .object({
       code: z
@@ -62,7 +62,7 @@ export const ChangeUserPasswordSchema = z.object({
       message: "New password must be different from old password",
       path: ["newpassword"],
     }),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
 
 export const IdentifierIdSchema = z.object({
@@ -75,5 +75,5 @@ export const IdentifierIdSchema = z.object({
       .trim()
       .uuid({ message: "invalid format" }),
   }),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });

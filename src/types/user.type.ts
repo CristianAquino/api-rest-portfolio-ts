@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { BaseDataUserSchema, CreateUserSchema } from "../schemas";
+import { BaseDataUserSchema, SignupUserSchema } from "../schemas";
 
-type UserRegisterType = z.infer<typeof CreateUserSchema>["body"];
-type UpdateUserDataType = z.infer<typeof BaseDataUserSchema>;
+type SignupUserType = z.infer<typeof SignupUserSchema>["body"];
+type UpdateDataUserType = z.infer<typeof BaseDataUserSchema>;
 
-export { UpdateUserDataType, UserRegisterType };
+export { UpdateDataUserType, SignupUserType };

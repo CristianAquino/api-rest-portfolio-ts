@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
-  getOneUser,
+  getOneUserController,
   postUploadImageUser,
-  putUpdateDataUser,
+  putUpdateDataUserController,
   putUploadImageUser,
 } from "../controllers";
 import { schemaValidator, verifyToken } from "../middlewares";
-import { UpdateUserSchema } from "../schemas";
+import { UpdateDataUserSchema } from "../schemas";
 import { CreateUserImageSchema } from "../schemas/image.schema";
 
 const userRoute = Router();
@@ -17,8 +17,8 @@ const userRoute = Router();
  *  get:
  *   tags:
  *    - User
- *   summary: get user
- *   description: get user
+ *   summary: get one user
+ *   description: get one user
  *   responses:
  *    200:
  *     description: successful operation
@@ -31,9 +31,9 @@ const userRoute = Router();
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  */
-userRoute.get("/one-user", getOneUser);
+userRoute.get("/one-user", getOneUserController);
 
 /**
  *@swagger
@@ -47,45 +47,45 @@ userRoute.get("/one-user", getOneUser);
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/UpdateUser'
+ *       $ref: '#/components/schemas/UpdateDataUser'
  *   responses:
  *    200:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    400:
  *     description: invalid id user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    401:
  *     description: unauthorized
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
 userRoute.put(
-  "/update-user",
-  [schemaValidator(UpdateUserSchema), verifyToken],
-  putUpdateDataUser
+  "/update-data-user",
+  [schemaValidator(UpdateDataUserSchema), verifyToken],
+  putUpdateDataUserController
 );
 
 /**
@@ -107,31 +107,31 @@ userRoute.put(
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    400:
  *     description: invalid id user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    401:
  *     description: unauthorized
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
@@ -160,31 +160,31 @@ userRoute.post(
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    400:
  *     description: invalid id user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    401:
  *     description: unauthorized
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */

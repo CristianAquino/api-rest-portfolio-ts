@@ -9,13 +9,13 @@ const permanData = {
     type: "string",
     description: "User first name",
     example: "Impsum",
-    length: 128,
+    length: 64,
   },
   second_name: {
     type: "string",
     description: "User second name",
     example: "Dolor",
-    length: 128,
+    length: 64,
   },
   description: {
     type: "string",
@@ -31,11 +31,13 @@ const permanData = {
   cv_link: {
     type: "string",
     description: "User cv link",
-    example: "https://www.xxxxx.com",
+    example: null,
   },
 };
-
-export const allDataUserSwaggerSchema = {
+// posible no se utilice
+// debido a que solo sera un
+// unico usuario
+export const AllDataUserSwaggerSchema = {
   type: "array",
   items: {
     type: "object",
@@ -62,16 +64,14 @@ export const allDataUserSwaggerSchema = {
       social: {
         $ref: "#/components/schemas/AllDataSocial",
       },
-      project: {
-        $ref: "#/components/schemas/AllDataProject",
-      },
       skill: {
         $ref: "#/components/schemas/AllDataSkill",
       },
     },
   },
 };
-export const dataUserSwaggerSchema = {
+// este si se usara
+export const DataUserSwaggerSchema = {
   type: "object",
   properties: {
     id: {
@@ -96,15 +96,12 @@ export const dataUserSwaggerSchema = {
     social: {
       $ref: "#/components/schemas/AllDataSocial",
     },
-    project: {
-      $ref: "#/components/schemas/AllDataProject",
-    },
     skill: {
       $ref: "#/components/schemas/AllDataSkill",
     },
   },
 };
-export const insertDataUserSwaggerSchema = {
+export const SignupDataUserSwaggerSchema = {
   type: "object",
   properties: {
     ...permanData,
@@ -116,7 +113,7 @@ export const insertDataUserSwaggerSchema = {
     },
   },
 };
-export const updateDataUserSwaggerSchema = {
+export const UpdateDataUserSwaggerSchema = {
   type: "object",
   properties: {
     ...permanData,

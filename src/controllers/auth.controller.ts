@@ -1,17 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  loginUser,
-  insertDataUser,
-  removeLoginUser,
-  generateCodeChangePassword,
-  changePassword,
+  changePasswordUserService,
+  codeChangePasswordUserService,
+  logoutUserService,
+  signinUserService,
+  signupUserService,
 } from "../services";
 import { RequestExtens } from "../types";
 import { UnauthorizedError } from "../utils";
 
-async function postLoginUser(req: Request, res: Response, next: NextFunction) {
+async function postSigninUserController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
-    const response = await loginUser({ data: req.body });
+    const response = await signinUserService({ data: req.body });
     return res.status(200).json({ token: response });
   } catch (error) {
     if (error instanceof Error) {
@@ -21,9 +25,13 @@ async function postLoginUser(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function postCreateUser(req: Request, res: Response, next: NextFunction) {
+async function postSignupUserController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
-    const response = await insertDataUser({ data: req.body });
+    const response = await signupUserService({ data: req.body });
     return res.status(201).json({ message: response });
   } catch (error) {
     if (error instanceof Error) {
@@ -33,7 +41,7 @@ async function postCreateUser(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function getLogoutUser(
+async function getLogoutUserController(
   req: RequestExtens<string>,
   res: Response,
   next: NextFunction
@@ -41,7 +49,7 @@ async function getLogoutUser(
   try {
     const { id } = req;
     if (id) {
-      const response = await removeLoginUser({ uuid: id });
+      const response = await logoutUserService({ uuid: id });
       return res.status(200).json({ message: response });
     } else {
       throw new UnauthorizedError(
@@ -56,7 +64,7 @@ async function getLogoutUser(
   }
 }
 
-async function postCodeChangePassword(
+async function postCodeChangePasswordUserController(
   req: RequestExtens<string>,
   res: Response,
   next: NextFunction
@@ -64,7 +72,7 @@ async function postCodeChangePassword(
   try {
     const { id } = req;
     if (id) {
-      const response = await generateCodeChangePassword({ uuid: id });
+      const response = await codeChangePasswordUserService({ uuid: id });
       return res.status(201).json({ message: response });
     } else {
       throw new UnauthorizedError(
@@ -79,7 +87,7 @@ async function postCodeChangePassword(
   }
 }
 
-async function putChangePassword(
+async function putChangePasswordUserController(
   req: RequestExtens<string>,
   res: Response,
   next: NextFunction
@@ -87,7 +95,10 @@ async function putChangePassword(
   try {
     const { id } = req;
     if (id) {
-      const response = await changePassword({ uuid: id, data: req.body });
+      const response = await changePasswordUserService({
+        uuid: id,
+        data: req.body,
+      });
       return res.status(201).json({ message: response });
     } else {
       throw new UnauthorizedError(
@@ -103,9 +114,9 @@ async function putChangePassword(
 }
 
 export {
-  postLoginUser,
-  postCreateUser,
-  getLogoutUser,
-  postCodeChangePassword,
-  putChangePassword,
+  getLogoutUserController,
+  postCodeChangePasswordUserController,
+  postSigninUserController,
+  postSignupUserController,
+  putChangePasswordUserController,
 };

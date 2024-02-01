@@ -1,4 +1,4 @@
-export const insertDataLogin = {
+export const SigninUserSwaggerSchema = {
   type: "object",
   properties: {
     email: {
@@ -15,7 +15,7 @@ export const insertDataLogin = {
   },
 };
 
-export const responseDataSuccessLogin = {
+export const TokenSigninUserSwaggerSchema = {
   type: "object",
   properties: {
     token: {
@@ -27,24 +27,24 @@ export const responseDataSuccessLogin = {
   },
 };
 
-export const changePasswordUser = {
+export const ChangePasswordUserSwaggerSchema = {
   type: "object",
   properties: {
     code: {
       type: "string",
-      description: "Code",
+      description: "Code of validation",
       example: "1234",
       length: 4,
     },
     oldpassword: {
       type: "string",
-      description: "Old password",
+      description: "Old password to change",
       example: "********",
       length: 32,
     },
     newpassword: {
       type: "string",
-      description: "Old password",
+      description: "New password to register",
       example: "********",
       length: 32,
     },

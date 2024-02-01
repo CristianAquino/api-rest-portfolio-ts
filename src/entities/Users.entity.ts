@@ -25,10 +25,10 @@ class Users extends BaseEntity {
   @Column({ type: "varchar", length: 64 })
   name: string;
 
-  @Column({ type: "varchar", length: 128 })
+  @Column({ type: "varchar", length: 64 })
   first_name: string;
 
-  @Column({ type: "varchar", length: 128 })
+  @Column({ type: "varchar", length: 64 })
   second_name: string;
 
   @Column({ type: "varchar", length: 200 })
@@ -40,8 +40,8 @@ class Users extends BaseEntity {
   @Column({ type: "varchar", length: 32 })
   password: string;
 
-  @Column({ type: "varchar" })
-  cv_link: string;
+  @Column({ type: "varchar", nullable: true })
+  cv_link: string | null;
 
   @Column({ type: "varchar", nullable: true })
   uuid: string | null;

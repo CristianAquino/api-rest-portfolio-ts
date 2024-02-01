@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseHeaderSchema } from "./auth.schema";
+import { BaseAuthorizationUserSchema } from "./auth.schema";
 
 export const BaseDataUserSchema = z.object({
   name: z
@@ -17,7 +17,7 @@ export const BaseDataUserSchema = z.object({
     })
     .trim()
     .min(3, { message: "min length must be 3" })
-    .max(128, { message: "max length must be 64" }),
+    .max(64, { message: "max length must be 64" }),
   second_name: z
     .string({
       required_error: "second name is required",
@@ -25,7 +25,7 @@ export const BaseDataUserSchema = z.object({
     })
     .trim()
     .min(3, { message: "min length must be 3" })
-    .max(128, { message: "max length must be 64" }),
+    .max(64, { message: "max length must be 64" }),
   description: z
     .string({
       required_error: "description is required",
@@ -36,28 +36,20 @@ export const BaseDataUserSchema = z.object({
     .max(200, { message: "max length must be 200" }),
   email: z
     .string({ required_error: "email is required" })
+    .trim()
     .email({ message: "invalid email" }),
-  cv_link: z
-    .string({
-      required_error: "cv link is required",
-    })
-    .nonempty({ message: "cv link is required" })
-    .regex(/^(http|https):\/\/[^\s/$.?#].[^\s]*$/gi, {
-      message: "invalid route",
-    }),
+  cv_link: z.null(
+    z
+      .string({
+        required_error: "cv link is required",
+      })
+      .regex(/^(http|https):\/\/[^\s/$.?#].[^\s]*$/gi, {
+        message: "invalid route",
+      })
+  ),
 });
 
-export const CreateUserSchema = z.object({
-  // body: z.object({
-  //   ...BaseDataUserSchema.shape,
-  //   password: z
-  //     .string({
-  //       required_error: "password is required",
-  //     })
-  //     .trim()
-  //     .min(8, { message: "min length must be 8" })
-  //     .max(32, { message: "max length must be 32" }),
-  // }),
+export const SignupUserSchema = z.object({
   body: BaseDataUserSchema.extend({
     password: z
       .string({
@@ -69,7 +61,7 @@ export const CreateUserSchema = z.object({
   }),
 });
 
-export const UpdateUserSchema = z.object({
+export const UpdateDataUserSchema = z.object({
   body: BaseDataUserSchema,
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });

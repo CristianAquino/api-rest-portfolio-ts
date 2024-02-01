@@ -1,11 +1,12 @@
 import { Resend } from "resend";
 import { UserDTO } from "../entities/DTO";
+import { Users } from "../entities";
 
 const { RESEND_KEY, EMAIL } = process.env;
 const resend = new Resend(RESEND_KEY);
 
 type sendCodeWithEmailProps = {
-  data: UserDTO;
+  data: Users;
 };
 
 async function sendCodeWithEmail({ data }: sendCodeWithEmailProps) {
