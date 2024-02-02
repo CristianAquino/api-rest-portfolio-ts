@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CreateSocialSchema, UpdateSocialSchema } from "../schemas";
+import { CreateDataSocialSchema, UpdateDataSocialSchema } from "../schemas";
 
-type SocialCreateType = z.infer<typeof CreateSocialSchema>["body"];
-type SocialUpdateType = z.infer<typeof UpdateSocialSchema>["body"];
+type CreateDataSocialType = z.infer<typeof CreateDataSocialSchema>["body"];
+type UpdateDataSocialType = z.infer<typeof UpdateDataSocialSchema>["body"];
 
-export { SocialCreateType, SocialUpdateType };
+export { CreateDataSocialType, UpdateDataSocialType };

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseHeaderSchema } from "./auth.schema";
+import { BaseAuthorizationUserSchema, id } from "./auth.schema";
 
 export const BaseDataSocialSchema = z.object({
   name: z
@@ -12,9 +12,9 @@ export const BaseDataSocialSchema = z.object({
     .max(64, { message: "max length must be 64" }),
   link: z
     .string({
-      required_error: "thumbnail link is required",
+      required_error: "link is required",
     })
-    .nonempty({ message: "thumbnail link is required" })
+    .nonempty({ message: "link is required" })
     .trim()
     .regex(/^(http|https):\/\/[^\s/$.?#].[^\s]*$/gi, {
       message: "invalid route",
@@ -32,24 +32,19 @@ export const BaseDataSocialSchema = z.object({
     }),
 });
 
-export const CreateSocialSchema = z.object({
+export const CreateDataSocialSchema = z.object({
   body: z.array(BaseDataSocialSchema),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
 
 // en el frontend colocar un boton de edit
 // luego colocar un boton que realice
 // la accion de actualizar
-export const UpdateSocialSchema = z.object({
+export const UpdateDataSocialSchema = z.object({
   body: z.array(
     BaseDataSocialSchema.extend({
-      id: z
-        .string({
-          required_error: "id is required",
-          invalid_type_error: "id must be a string",
-        })
-        .uuid({ message: "invalid format" }),
+      id,
     })
   ),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
