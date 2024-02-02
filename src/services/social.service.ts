@@ -1,41 +1,81 @@
 import { Socials, Users } from "../entities";
-import { ParamsType, SocialCreateType, SocialUpdateType } from "../types";
+import {
+  CreateDataSocialType,
+  ParamsType,
+  UpdateDataSocialType,
+} from "../types";
 import { NoContentError } from "../utils";
 
-async function allSocialData() {
+async function allSocialDataUserService() {
   const social = await Socials.find();
+
   if (social.length == 0)
     throw new NoContentError("No records have been created yet");
+
   return social;
 }
 
-async function createUserSocial({ uuid, data }: ParamsType<SocialCreateType>) {
+async function meSocialDataUserService({
+  uuid,
+}: Omit<ParamsType<unknown>, "data">) {
+  const user = await Users.createQueryBuilder("users")
+    .innerJoinAndSelect("users.socials", "socials")
+    .where("users.uuid = :uuid", { uuid })
+    .getOne();
+
+  if (!user) throw new NoContentError("Data social user not found");
+
+  return user.socials;
+}
+
+async function createSocialUserService({
+  uuid,
+  data,
+}: ParamsType<CreateDataSocialType>) {
   const user = await Users.findOneBy({ uuid });
+
   if (!user) throw new NoContentError("User not found");
+
   for (const item of data) {
     const social = new Socials();
+
     social.name = item.name;
     social.link = item.link;
     social.color = item.color;
     social.user = user;
+
     await social.save();
   }
+
   return "created social";
 }
 
-async function updateDataSocial({
+async function updateSocialUserService({
+  uuid,
   data,
-}: Pick<ParamsType<SocialUpdateType>, "data">) {
+}: ParamsType<UpdateDataSocialType>) {
   let notfound: string[] = [];
+
+  const user = await Users.createQueryBuilder("users")
+    .innerJoinAndSelect("users.socials", "socials")
+    .where("users.uuid = :uuid", { uuid })
+    .getOne();
+
+  if (!user) throw new NoContentError("Data social user not found");
+
+  const mySocials = user.socials.map((social) => social.id);
+
   for (const item of data) {
     const { id, ...sf } = item;
-    const social = await Socials.findOneBy({ id });
-    if (!social) {
+
+    if (!mySocials.includes(id)) {
       notfound.push(item.id);
       continue;
     }
+
     await Socials.update({ id }, { ...sf });
   }
+
   if (notfound.length == 0) {
     return "updated social";
   } else {
@@ -43,11 +83,37 @@ async function updateDataSocial({
   }
 }
 
-async function deleteDataSocial({ id }: { id: string }) {
-  const social = await Socials.findOneBy({ id });
-  if (!social) throw new NoContentError("social not found");
-  await social.remove();
-  return `social with ${id} is deleted`;
+async function deleteSocialUserService({
+  id,
+  uuid,
+}: {
+  id: string;
+  uuid: string;
+}) {
+  const user = await Users.createQueryBuilder("users")
+    .innerJoinAndSelect("users.socials", "socials")
+    .where("users.uuid = :uuid", { uuid })
+    .getOne();
+
+  if (!user) throw new NoContentError("Data social user not found");
+
+  const mySocials = user.socials.map((social) => social.id);
+
+  if (mySocials.includes(id)) {
+    const social = await Socials.findOneBy({ id });
+
+    await social?.remove();
+
+    return `social with ${id} is deleted`;
+  } else {
+    throw new NoContentError("social not found");
+  }
 }
 
-export { allSocialData, createUserSocial, updateDataSocial, deleteDataSocial };
+export {
+  allSocialDataUserService,
+  createSocialUserService,
+  deleteSocialUserService,
+  meSocialDataUserService,
+  updateSocialUserService,
+};
