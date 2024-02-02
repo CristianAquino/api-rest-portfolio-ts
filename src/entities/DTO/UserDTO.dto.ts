@@ -13,9 +13,8 @@ export class UserDTO {
   uuid: string | null;
   code: string | null;
   image: ImagesDTO;
-  social: SocialDTO[];
-  project: Projects[];
-  skill: SkillDTO[];
+  socials: SocialDTO[];
+  skills: SkillDTO[];
 
   constructor(user: Users) {
     this.id = user.id;
@@ -32,8 +31,7 @@ export class UserDTO {
     } else {
       this.image = user.image;
     }
-    this.social = user.socials.map((s) => new SocialDTO(s));
-    this.project = user.projects;
-    this.skill = user.skills.map((s) => new SkillDTO(s));
+    this.socials = user.socials.map((s) => new SocialDTO(s));
+    this.skills = user.skills.map((s) => new SkillDTO(s));
   }
 }
