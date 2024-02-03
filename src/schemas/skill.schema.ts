@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseHeaderSchema } from "./auth.schema";
+import { BaseAuthorizationUserSchema, id } from "./auth.schema";
 import { TypeSkill } from "../types";
 
 export const BaseDataSkillSchema = z.object({
@@ -25,19 +25,14 @@ export const BaseDataSkillSchema = z.object({
 
 export const CreateSkillSchema = z.object({
   body: z.array(BaseDataSkillSchema),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
 
 export const UpdateSkillSchema = z.object({
   body: z.array(
     BaseDataSkillSchema.extend({
-      id: z
-        .string({
-          required_error: "id is required",
-          invalid_type_error: "id must be a string",
-        })
-        .uuid({ message: "invalid format" }),
+      id,
     })
   ),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
