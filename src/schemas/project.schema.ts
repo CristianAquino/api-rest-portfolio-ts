@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseHeaderSchema } from "./auth.schema";
+import { BaseAuthorizationUserSchema } from "./auth.schema";
 import { thumbnail } from "./image.schema";
 
 export const BaseDataProjectSchema = z.object({
@@ -44,7 +44,7 @@ export const BaseDataProjectSchema = z.object({
 
 export const CreateProjectSchema = z.object({
   body: z.array(BaseDataProjectSchema),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
 
 // export const UpdateProjectSchema = z.object({
@@ -95,5 +95,5 @@ export const UpdateProjectSchema = z.object({
         message: "invalid route",
       }),
   }),
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
