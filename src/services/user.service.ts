@@ -1,12 +1,12 @@
 import { Images, Users } from "../entities";
-import { UserDTO } from "../entities/DTO";
+import { AllUserDTO, UserDTO } from "../entities/DTO";
 import { ImageType, ParamsType, UpdateDataUserType } from "../types";
 import { NoContentError, NotFoundError, UpdatedError } from "../utils";
 
 // se realizan dos llamadas
 // 1. Obtener todos los usuarios
 // 2. Obtener los projectos
-async function oneUserService() {
+async function allUserDataService() {
   const user = await Users.find({
     relations: {
       image: true,
@@ -15,10 +15,24 @@ async function oneUserService() {
     },
   });
 
-  if (user.length == 0)
-    throw new NoContentError("No records have been created yet");
+  if (user.length == 0) {
+    return [];
+  } else {
+    const userDTO = user.map((user) => new AllUserDTO(user));
 
-  const userDTO = user.map((user) => new UserDTO(user));
+    return userDTO;
+  }
+}
+
+async function meUserDataService({ uuid }: Omit<ParamsType<unknown>, "data">) {
+  const user = await Users.createQueryBuilder("users")
+    .innerJoinAndSelect("users.image", "images")
+    .where("users.uuid = :uuid", { uuid })
+    .getOne();
+
+  if (!user) throw new NoContentError("Data social user not found");
+
+  const userDTO = new UserDTO(user);
 
   return userDTO;
 }
@@ -39,19 +53,7 @@ async function updateDataUserService({
   return "user updated";
 }
 
-// async function UploadImageUser({ uuid, data }: ParamsType<ImageType>) {
-//   const user = await Users.findOneBy({ uuid });
-//   if (!user) throw new NotFoundError("User not found");
-//   const image = new Images();
-//   image.thumbnail = data.thumbnail;
-//   const newImage = await image.save();
-//   user.image = newImage;
-//   await user.save();
-
-//   return "image upload";
-// }
-
-async function UpdateImageUserService({ uuid, data }: ParamsType<ImageType>) {
+async function updateImageUserService({ uuid, data }: ParamsType<ImageType>) {
   const { id, ...sf } = data;
   const user = await Users.createQueryBuilder("users")
     .innerJoinAndSelect("users.image", "images")
@@ -70,8 +72,8 @@ async function UpdateImageUserService({ uuid, data }: ParamsType<ImageType>) {
 }
 
 export {
-  UpdateImageUserService,
-  // UploadImageUser,
-  oneUserService,
+  allUserDataService,
+  meUserDataService,
   updateDataUserService,
+  updateImageUserService,
 };

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
-  getOneUserController,
+  getAllUserDataController,
+  getMeUserDataController,
   putUpdateDataUserController,
   putUpdateImageUserController,
 } from "../controllers";
@@ -11,7 +12,7 @@ const userRoute = Router();
 
 /**
  *@swagger
- * /user/one-user:
+ * /user/all-user-data:
  *  get:
  *   tags:
  *    - User
@@ -31,11 +32,37 @@ const userRoute = Router();
  *       schema:
  *        $ref: '#/components/schemas/MessageResponseActionUser'
  */
-userRoute.get("/one-user", getOneUserController);
+userRoute.get("/all-user-data", getAllUserDataController);
 
 /**
  *@swagger
- * /user/update-data-user:
+ * /user/me-user-data:
+ *  get:
+ *   tags:
+ *    - User
+ *   summary: get one user
+ *   description: get one user
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/OneDataUser'
+ *    204:
+ *     description: No content
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ *   security:
+ *    - bearerAuth: []
+ */
+userRoute.get("/me-user-data", verifyToken, getMeUserDataController);
+
+/**
+ *@swagger
+ * /user/update-data:
  *  put:
  *   tags:
  *    - User
@@ -81,14 +108,14 @@ userRoute.get("/one-user", getOneUserController);
  *    - bearerAuth: []
  */
 userRoute.put(
-  "/update-data-user",
+  "/update-data",
   [schemaValidator(UpdateDataUserSchema), verifyToken],
   putUpdateDataUserController
 );
 
 /**
  *@swagger
- * /user/update-image-user:
+ * /user/update-image:
  *  put:
  *   tags:
  *    - User
@@ -134,7 +161,7 @@ userRoute.put(
  *    - bearerAuth: []
  */
 userRoute.put(
-  "/update-image-user",
+  "/update-image",
   [schemaValidator(SendDataImageSchema), verifyToken],
   putUpdateImageUserController
 );
