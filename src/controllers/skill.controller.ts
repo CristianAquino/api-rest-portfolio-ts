@@ -1,17 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  allSkillData,
-  createUserSkill,
-  deleteDataSkill,
-  updateDataSkill,
+  allSkillDataService,
+  createSkillService,
+  deleteSkillService,
+  meSkillDataService,
+  updateSkillService,
 } from "../services";
 import { RequestExtens } from "../types";
 import { UnauthorizedError } from "../utils";
 
-async function getAllSkill(req: Request, res: Response, next: NextFunction) {
+async function getAllSkillDataController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
-    const rsponse = await allSkillData();
-    return res.status(200).json(rsponse);
+    const response = await allSkillDataService();
+    return res.status(200).json(response);
   } catch (error) {
     if (error instanceof Error) {
       return next(error);
@@ -20,7 +25,29 @@ async function getAllSkill(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function postCreateUserSkill(
+async function getMeSkillDataController(
+  req: RequestExtens<string>,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    if (req.id) {
+      const response = await meSkillDataService({ uuid: req.id });
+      return res.status(200).json(response);
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      return next(error);
+    }
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+async function postCreateSkillController(
   req: RequestExtens<string>,
   res: Response,
   next: NextFunction
@@ -28,7 +55,7 @@ async function postCreateUserSkill(
   try {
     const { body, id } = req;
     if (id) {
-      const response = await createUserSkill({ uuid: id, data: body });
+      const response = await createSkillService({ uuid: id, data: body });
       return res.status(201).json({ message: response });
     } else {
       throw new UnauthorizedError(
@@ -43,17 +70,23 @@ async function postCreateUserSkill(
   }
 }
 
-async function putUpdateSkillUser(
-  req: Request,
+async function putUpdateSkillController(
+  req: RequestExtens<string>,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const { body } = req;
-    const response = await updateDataSkill({ data: body });
-    if (typeof response === "object")
-      return res.status(400).json({ dontsave: response });
-    return res.status(200).json({ message: response });
+    const { body, id } = req;
+    if (id) {
+      const response = await updateSkillService({ data: body, uuid: id });
+      if (typeof response === "object")
+        return res.status(400).json({ dontsave: response });
+      return res.status(200).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
+    }
   } catch (error) {
     if (error instanceof Error) {
       return next(error);
@@ -62,15 +95,21 @@ async function putUpdateSkillUser(
   }
 }
 
-async function deleteSkillUser(
-  req: Request,
+async function deleteSkillController(
+  req: RequestExtens<string>,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const { id } = req.params;
-    const response = await deleteDataSkill({ id });
-    return res.status(200).json({ message: response });
+    if (req.id) {
+      const { id } = req.params;
+      const response = await deleteSkillService({ id, uuid: req.id });
+      return res.status(200).json({ message: response });
+    } else {
+      throw new UnauthorizedError(
+        "You do not have permissions to perform this action"
+      );
+    }
   } catch (error) {
     if (error instanceof Error) {
       return next(error);
@@ -80,8 +119,9 @@ async function deleteSkillUser(
 }
 
 export {
-  deleteSkillUser,
-  getAllSkill,
-  postCreateUserSkill,
-  putUpdateSkillUser,
+  deleteSkillController,
+  getAllSkillDataController,
+  getMeSkillDataController,
+  postCreateSkillController,
+  putUpdateSkillController,
 };

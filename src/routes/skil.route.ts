@@ -1,22 +1,23 @@
 import { Router } from "express";
 import {
-  deleteSkillUser,
-  getAllSkill,
-  postCreateUserSkill,
-  putUpdateSkillUser,
+  deleteSkillController,
+  getAllSkillDataController,
+  getMeSkillDataController,
+  postCreateSkillController,
+  putUpdateSkillController,
 } from "../controllers";
+import { schemaValidator, verifyToken } from "../middlewares";
 import {
   CreateSkillSchema,
   IdentifierIdSchema,
   UpdateSkillSchema,
 } from "../schemas";
-import { schemaValidator, verifyToken } from "../middlewares";
 
 const skillRoute = Router();
 
 /**
 @swagger
- * /skill/all-skill:
+ * /skill/all-skill-data:
  *  get:
  *   tags:
  *    - Skill
@@ -34,9 +35,35 @@ const skillRoute = Router();
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  */
-skillRoute.get("/all-skill", getAllSkill);
+skillRoute.get("/all-skill-data", getAllSkillDataController);
+
+/**
+@swagger
+ * /skill/me-skill-data:
+ *  get:
+ *   tags:
+ *    - Skill
+ *   summary: skill user
+ *   description: skill user
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/AllDataSkill'
+ *    204:
+ *     description: No content
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ *   security:
+ *    - bearerAuth: []
+ */
+skillRoute.get("/me-skill-data", verifyToken, getMeSkillDataController);
 
 /**
 @swagger
@@ -50,39 +77,39 @@ skillRoute.get("/all-skill", getAllSkill);
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/InsertSkill'
+ *       $ref: '#/components/schemas/InsertDataSkill'
  *   responses:
  *    201:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    402:
  *     description: user already exists
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *    500:
  *     description: error to created new user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *   security:
  *    - bearerAuth: []
  */
 skillRoute.post(
   "/create-skill",
   [schemaValidator(CreateSkillSchema), verifyToken],
-  postCreateUserSkill
+  postCreateSkillController
 );
 
 /**
@@ -97,45 +124,45 @@ skillRoute.post(
  *    content:
  *     application/json:
  *      schema:
- *       $ref: '#/components/schemas/UpdateSkill'
+ *       $ref: '#/components/schemas/UpdateDataSkill'
  *   responses:
  *    200:
  *     description: successful operation
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    400:
  *     description: invalid id user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    401:
  *     description: unauthorized
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
 skillRoute.put(
   "/update-skill",
   [schemaValidator(UpdateSkillSchema), verifyToken],
-  putUpdateSkillUser
+  putUpdateSkillController
 );
 
 /**
@@ -160,38 +187,38 @@ skillRoute.put(
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    400:
  *     description: invalid id user
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    401:
  *     description: unauthorized
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    404:
  *     description: user not found
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  *    422:
  *     description: validation exception
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
  *   security:
  *    - bearerAuth: []
  */
 skillRoute.delete(
   "/delete-skill/:id",
   [schemaValidator(IdentifierIdSchema), verifyToken],
-  deleteSkillUser
+  deleteSkillController
 );
 
 export { skillRoute };
