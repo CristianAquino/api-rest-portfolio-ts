@@ -1,9 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { allImageInfo } from "../services";
+import { allDataImageService } from "../services";
 
-async function getAllImage(req: Request, res: Response, next: NextFunction) {
+async function getAllDataImageController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
-    const response = await allImageInfo();
+    const response = await allDataImageService();
     return res.status(200).json(response);
   } catch (error) {
     if (error instanceof Error) {
@@ -13,4 +17,4 @@ async function getAllImage(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { getAllImage };
+export { getAllDataImageController };

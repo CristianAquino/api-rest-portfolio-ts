@@ -1,12 +1,13 @@
 import { Images } from "../entities";
-import { NoContentError } from "../utils";
 
-async function allImageInfo() {
+async function allDataImageService() {
   const images = await Images.find();
-  if (images.length == 0)
-    throw new NoContentError("No records have been created yet");
 
-  return images;
+  if (images.length == 0) {
+    return [];
+  } else {
+    return images;
+  }
 }
 
-export { allImageInfo };
+export { allDataImageService };

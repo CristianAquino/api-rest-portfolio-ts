@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { getAllImage } from "../controllers";
+import { getAllDataImageController } from "../controllers";
 
 const imageRoute = Router();
 
 /**
  *@swagger
- * /image/all-image:
+ * /image/all-data-image:
  *  get:
  *   tags:
  *    - Image
@@ -23,8 +23,8 @@ const imageRoute = Router();
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/schemas/MessageResponse'
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
  */
-imageRoute.get("/all-image", getAllImage);
+imageRoute.get("/all-data-image", getAllDataImageController);
 
 export { imageRoute };
