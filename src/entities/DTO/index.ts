@@ -1,3 +1,4 @@
+export * from "./AllUserDTO";
 export * from "./ImageDTO.dto";
 export * from "./ProjectDTO.dto";
 export * from "./SkillDTO.dto";
