@@ -9,10 +9,11 @@ import { NoContentError } from "../utils";
 async function allSocialDataUserService() {
   const social = await Socials.find();
 
-  if (social.length == 0)
-    throw new NoContentError("No records have been created yet");
-
-  return social;
+  if (social.length == 0) {
+    return [];
+  } else {
+    return social;
+  }
 }
 
 async function meSocialDataUserService({
@@ -23,7 +24,7 @@ async function meSocialDataUserService({
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data social user not found");
+  if (!user) return user;
 
   return user.socials;
 }
@@ -77,7 +78,7 @@ async function updateSocialUserService({
   }
 
   if (notfound.length == 0) {
-    return "updated social";
+    return "updated socials";
   } else {
     return notfound;
   }
