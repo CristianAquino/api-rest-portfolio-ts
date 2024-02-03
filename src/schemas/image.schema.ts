@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseHeaderSchema } from "./auth.schema";
+import { BaseAuthorizationUserSchema, id } from "./auth.schema";
 
 export const thumbnail = z
   .string({
@@ -11,10 +11,11 @@ export const thumbnail = z
   });
 
 export const BaseDataImageSchema = z.object({
+  id,
   thumbnail,
 });
 
-export const CreateUserImageSchema = z.object({
+export const SendDataImageSchema = z.object({
   body: BaseDataImageSchema,
-  headers: BaseHeaderSchema,
+  headers: BaseAuthorizationUserSchema,
 });
