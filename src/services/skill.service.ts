@@ -43,8 +43,6 @@ async function createSkillService({ uuid, data }: ParamsType<SkillCreateType>) {
 }
 
 async function updateSkillService({ data, uuid }: ParamsType<SkillUpdateType>) {
-  let notfound: string[] = [];
-
   const user = await Users.createQueryBuilder("users")
     .innerJoinAndSelect("users.skills", "skills")
     .where("users.uuid = :uuid", { uuid })
@@ -54,21 +52,16 @@ async function updateSkillService({ data, uuid }: ParamsType<SkillUpdateType>) {
 
   const mySkills = user.skills.map((skill) => skill.id);
 
-  for (const item of data) {
-    const { id, ...sf } = item;
+  if (mySkills.includes(data.id)) {
+    const { id, ...sf } = data;
 
-    if (!mySkills.includes(id)) {
-      notfound.push(item.id);
-      continue;
-    }
+    const updateSkill = await Skills.update({ id }, sf);
 
-    await Skills.update({ id }, { ...sf });
-  }
+    if (updateSkill.affected === 0) throw new NoContentError("skill not found");
 
-  if (notfound.length == 0) {
-    return "updated skills";
+    return "updated skill";
   } else {
-    return notfound;
+    throw new NoContentError("project not found");
   }
 }
 

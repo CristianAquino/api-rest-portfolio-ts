@@ -66,21 +66,17 @@ async function updateSocialUserService({
 
   const mySocials = user.socials.map((social) => social.id);
 
-  for (const item of data) {
-    const { id, ...sf } = item;
+  if (mySocials.includes(data.id)) {
+    const { id, ...sf } = data;
 
-    if (!mySocials.includes(id)) {
-      notfound.push(item.id);
-      continue;
-    }
+    const updatesocial = await Socials.update({ id }, { ...sf });
 
-    await Socials.update({ id }, { ...sf });
-  }
+    if (updatesocial.affected === 0)
+      throw new NoContentError("social not found");
 
-  if (notfound.length == 0) {
-    return "updated socials";
+    return "updated social";
   } else {
-    return notfound;
+    throw new NoContentError("project not found");
   }
 }
 
