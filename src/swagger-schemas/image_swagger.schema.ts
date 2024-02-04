@@ -1,4 +1,4 @@
-const permanData = {
+export const PermanDataImage = {
   id: {
     type: "string",
     description: "Image ID",
@@ -10,24 +10,10 @@ const permanData = {
     example: "https://example.com/thumbnail.jpg",
   },
 };
-export const AllDataImageSwaggerSchema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      ...permanData,
-      small: {
-        type: "string",
-        description: "Image small",
-        example: "https://example.com/small.jpg",
-      },
-    },
-  },
-};
 export const OneDataImageSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
+    ...PermanDataImage,
     small: {
       type: "string",
       description: "Image small",
@@ -35,9 +21,18 @@ export const OneDataImageSwaggerSchema = {
     },
   },
 };
+export const AllDataImageSwaggerSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      ...OneDataImageSwaggerSchema,
+    },
+  },
+};
 export const SendDataImageSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
+    ...PermanDataImage,
   },
 };

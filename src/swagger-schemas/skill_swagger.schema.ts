@@ -1,4 +1,4 @@
-const permanData = {
+export const PermanDataSkill = {
   name: {
     type: "string",
     description: "Skill name",
@@ -16,20 +16,6 @@ const permanData = {
     example: "language",
   },
 };
-export const AllDataSkillSwaggerSchema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      id: {
-        type: "string",
-        description: "Skill ID",
-        example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-      },
-      ...permanData,
-    },
-  },
-};
 export const OneDataSkillSwaggerSchema = {
   type: "object",
   properties: {
@@ -38,7 +24,16 @@ export const OneDataSkillSwaggerSchema = {
       description: "Skill ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
-    ...permanData,
+    ...PermanDataSkill,
+  },
+};
+export const AllDataSkillSwaggerSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      ...OneDataSkillSwaggerSchema,
+    },
   },
 };
 export const InsertDataSkillSwaggerSchema = {
@@ -46,13 +41,13 @@ export const InsertDataSkillSwaggerSchema = {
   items: {
     type: "object",
     properties: {
-      ...permanData,
+      ...PermanDataSkill,
     },
   },
 };
-export const UpdateDataSkillSwaggerSchema = {
-  type: "array",
-  items: {
-    ...OneDataSkillSwaggerSchema,
-  },
-};
+// export const UpdateDataSkillSwaggerSchema = {
+//   type: "array",
+//   items: {
+//     ...OneDataSkillSwaggerSchema,
+//   },
+// };

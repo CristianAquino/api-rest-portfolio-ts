@@ -1,4 +1,6 @@
-const permanData = {
+import { PermanDataImage } from "./image_swagger.schema";
+
+export const PermanDataProject = {
   title: {
     type: "string",
     description: "Project title",
@@ -16,46 +18,16 @@ const permanData = {
     description: "Project link",
     example: "https://www.xxxxx.com",
   },
-  thumbnail: {
-    type: "string",
-    description: "Image thumbnail",
-    example: "https://example.com/thumbnail.jpg",
-  },
-  small: {
-    type: "string",
-    description: "Image small",
-    example: "https://example.com/small.jpg",
-  },
 };
-export const allDataProjectSwaggerSchema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      ...permanData,
-      id: {
-        type: "string",
-        description: "User ID",
-        example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-      },
-      image: {
-        $ref: "#/components/schemas/DataImage",
-      },
-      skill: {
-        $ref: "#/components/schemas/AllDataSkill",
-      },
-    },
-  },
-};
-export const dataProjectSwaggerSchema = {
+export const OneDataProjectSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
     id: {
       type: "string",
-      description: "User ID",
+      description: "Project ID",
       example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
     },
+    ...PermanDataProject,
     image: {
       $ref: "#/components/schemas/AllDataImage",
     },
@@ -64,26 +36,71 @@ export const dataProjectSwaggerSchema = {
     },
   },
 };
-export const insertDataProjectSwaggerSchema = {
+export const AllDataProjectSwaggerSchema = {
   type: "array",
   items: {
-    type: "object",
-    properties: {
-      ...permanData,
-      skills: {
-        type: "array",
-        items: {
-          type: "string",
-          description: "Skill ID",
-          example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-        },
+    ...OneDataProjectSwaggerSchema,
+  },
+};
+export const InsertDataProjectSwaggerSchema = {
+  type: "object",
+  properties: {
+    ...PermanDataProject,
+    thumbnail: {
+      type: "string",
+      description: "Image thumbnail",
+      example: "https://example.com/thumbnail.jpg",
+    },
+    skills: {
+      type: "array",
+      items: {
+        type: "string",
+        description: "Skill ID",
+        example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
     },
   },
 };
-export const updateDataProjectSwaggerSchema = {
+export const UpdateDataProjectSwaggerSchema = {
   type: "object",
   properties: {
-    ...permanData,
+    id: {
+      type: "string",
+      description: "Project ID",
+      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+    },
+    ...PermanDataProject,
+  },
+};
+export const UpdateImageDataProjectSwaggerSchema = {
+  type: "object",
+  properties: {
+    id: {
+      type: "string",
+      description: "Project ID",
+      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+    },
+    image: {
+      type: "object",
+      properties: { ...PermanDataImage },
+    },
+  },
+};
+export const UpdateSkillsDataProjectSwaggerSchema = {
+  type: "object",
+  properties: {
+    id: {
+      type: "string",
+      description: "Project ID",
+      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+    },
+    skills: {
+      type: "array",
+      items: {
+        type: "string",
+        description: "Skill ID",
+        example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+      },
+    },
   },
 };

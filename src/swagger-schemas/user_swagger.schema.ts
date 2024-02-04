@@ -70,8 +70,7 @@ export const AllDataUserSwaggerSchema = {
     },
   },
 };
-// este si se usara
-export const DataUserSwaggerSchema = {
+export const OneDataUserSwaggerSchema = {
   type: "object",
   properties: {
     id: {
@@ -85,24 +84,8 @@ export const DataUserSwaggerSchema = {
       description: "User email",
       example: "lorem@ipsum.com",
     },
-    uuid: {
-      type: "string",
-      description: "User uuid",
-      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
-    code: {
-      type: "string",
-      description: "Code change password",
-      example: "1234",
-    },
     image: {
       $ref: "#/components/schemas/OneDataImage",
-    },
-    social: {
-      $ref: "#/components/schemas/AllDataSocialUser",
-    },
-    skill: {
-      $ref: "#/components/schemas/AllDataSkill",
     },
   },
 };

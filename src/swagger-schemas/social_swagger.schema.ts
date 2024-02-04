@@ -24,7 +24,7 @@ export const AllDataSocialUserSwaggerSchema = {
     properties: {
       id: {
         type: "string",
-        description: "User ID",
+        description: "Social ID",
         example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
       },
       ...permanData,
