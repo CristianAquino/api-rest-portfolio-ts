@@ -13,9 +13,9 @@ export const BaseDataSkillSchema = z.object({
     .max(64, { message: "max length must be 64" }),
   icon: z
     .string({
-      required_error: "thumbnail link is required",
+      required_error: "icon is required",
     })
-    .nonempty({ message: "thumbnail link is required" })
+    .nonempty({ message: "icon is required" })
     .trim()
     .regex(/^(http|https):\/\/[^\s/$.?#].[^\s]*$/gi, {
       message: "invalid route",
@@ -29,10 +29,8 @@ export const CreateSkillSchema = z.object({
 });
 
 export const UpdateSkillSchema = z.object({
-  body: z.array(
-    BaseDataSkillSchema.extend({
-      id,
-    })
-  ),
+  body: BaseDataSkillSchema.extend({
+    id,
+  }),
   headers: BaseAuthorizationUserSchema,
 });

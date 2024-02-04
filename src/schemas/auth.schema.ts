@@ -53,14 +53,14 @@ export const ChangePasswordUserSchema = z.object({
         .regex(/^\d{4}$/gi, { message: "invalid code" }),
       oldpassword: z
         .string({
-          required_error: "password is required",
+          required_error: "old password is required",
         })
         .trim()
         .min(8, { message: "min length must be 8" })
         .max(32, { message: "max length must be 32" }),
       newpassword: z
         .string({
-          required_error: "password is required",
+          required_error: "new password is required",
         })
         .trim()
         .min(8, { message: "min length must be 8" })

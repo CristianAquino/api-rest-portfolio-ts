@@ -41,10 +41,8 @@ export const CreateDataSocialSchema = z.object({
 // luego colocar un boton que realice
 // la accion de actualizar
 export const UpdateDataSocialSchema = z.object({
-  body: z.array(
-    BaseDataSocialSchema.extend({
-      id,
-    })
-  ),
+  body: BaseDataSocialSchema.extend({
+    id,
+  }),
   headers: BaseAuthorizationUserSchema,
 });

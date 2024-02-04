@@ -34,10 +34,6 @@ export const BaseDataUserSchema = z.object({
     .trim()
     .min(3, { message: "min length must be 3" })
     .max(200, { message: "max length must be 200" }),
-  email: z
-    .string({ required_error: "email is required" })
-    .trim()
-    .email({ message: "invalid email" }),
   cv_link: z.null(
     z
       .string({
@@ -51,6 +47,10 @@ export const BaseDataUserSchema = z.object({
 
 export const SignupUserSchema = z.object({
   body: BaseDataUserSchema.extend({
+    email: z
+      .string({ required_error: "email is required" })
+      .trim()
+      .email({ message: "invalid email" }),
     password: z
       .string({
         required_error: "password is required",
