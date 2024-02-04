@@ -1,28 +1,28 @@
 import swaggerJSDoc, { OAS3Definition, OAS3Options } from "swagger-jsdoc";
 import {
   AllDataImageSwaggerSchema,
+  AllDataProjectSwaggerSchema,
   AllDataSkillSwaggerSchema,
   AllDataSocialUserSwaggerSchema,
   AllDataUserSwaggerSchema,
   ChangePasswordUserSwaggerSchema,
-  DataUserSwaggerSchema,
+  InsertDataProjectSwaggerSchema,
   InsertDataSkillSwaggerSchema,
   InsertDataSocialUserSwaggerSchema,
   MessageResponseActionUserSwaggerSchema,
   OneDataImageSwaggerSchema,
+  OneDataProjectSwaggerSchema,
   OneDataSkillSwaggerSchema,
-  OneDataSocialUserSwaggerSchema,
+  OneDataUserSwaggerSchema,
   SendDataImageSwaggerSchema,
   SigninUserSwaggerSchema,
   SignupDataUserSwaggerSchema,
   TokenSigninUserSwaggerSchema,
-  UpdateDataSkillSwaggerSchema,
+  UpdateDataProjectSwaggerSchema,
   UpdateDataSocialUserSwaggerSchema,
   UpdateDataUserSwaggerSchema,
-  allDataProjectSwaggerSchema,
-  dataProjectSwaggerSchema,
-  insertDataProjectSwaggerSchema,
-  updateDataProjectSwaggerSchema,
+  UpdateImageDataProjectSwaggerSchema,
+  UpdateSkillsDataProjectSwaggerSchema,
 } from "../swagger-schemas";
 import { ErrorMessageInputDataUserSwaggerSchema } from "../swagger-schemas/error_swagger.schema";
 /**
@@ -72,7 +72,7 @@ const swaggerDefinition: OAS3Definition = {
       ChangePasswordUser: ChangePasswordUserSwaggerSchema,
       // user
       AllDataUser: AllDataUserSwaggerSchema,
-      DataUser: DataUserSwaggerSchema,
+      OneDataUser: OneDataUserSwaggerSchema,
       SignupDataUser: SignupDataUserSwaggerSchema,
       UpdateDataUser: UpdateDataUserSwaggerSchema,
       // image
@@ -81,19 +81,20 @@ const swaggerDefinition: OAS3Definition = {
       SendDataImage: SendDataImageSwaggerSchema,
       // social
       AllDataSocialUser: AllDataSocialUserSwaggerSchema,
-      OneDataSocialUser: OneDataSocialUserSwaggerSchema,
       InsertDataSocialUser: InsertDataSocialUserSwaggerSchema,
       UpdateDataSocialUser: UpdateDataSocialUserSwaggerSchema,
       // project
-      AllDataProject: allDataProjectSwaggerSchema,
-      DataProject: dataProjectSwaggerSchema,
-      InsertProject: insertDataProjectSwaggerSchema,
-      UpdateProject: updateDataProjectSwaggerSchema,
+      AllDataProject: AllDataProjectSwaggerSchema,
+      OneDataProject: OneDataProjectSwaggerSchema,
+      InsertDataProject: InsertDataProjectSwaggerSchema,
+      UpdateDataProject: UpdateDataProjectSwaggerSchema,
+      UpdateImageDataProject: UpdateImageDataProjectSwaggerSchema,
+      UpdateSkillsDataProject: UpdateSkillsDataProjectSwaggerSchema,
       // skill
       AllDataSkill: AllDataSkillSwaggerSchema,
       OneDataSkill: OneDataSkillSwaggerSchema,
       InsertDataSkill: InsertDataSkillSwaggerSchema,
-      UpdateDataSkill: UpdateDataSkillSwaggerSchema,
+      UpdateDataSkill: OneDataSkillSwaggerSchema,
       // message
       MessageResponseActionUser: MessageResponseActionUserSwaggerSchema,
       // error
