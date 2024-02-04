@@ -8,7 +8,7 @@ export class ProjectDTO {
   description: string;
   link: string;
   image: ImagesDTO;
-  skill: SkillDTO[];
+  skills: SkillDTO[];
 
   constructor(project: Projects) {
     this.id = project.id;
@@ -16,6 +16,6 @@ export class ProjectDTO {
     this.description = project.description;
     this.link = project.link;
     this.image = new ImagesDTO(project.image);
-    this.skill = project.skills.map((s) => new SkillDTO(s));
+    this.skills = project.skills.map((s) => new SkillDTO(s));
   }
 }

@@ -5,6 +5,7 @@ export class SkillDTO {
   name: string;
   icon: string;
   type: string;
+
   constructor(skill: Skills) {
     this.id = skill.id;
     this.name = skill.name;
