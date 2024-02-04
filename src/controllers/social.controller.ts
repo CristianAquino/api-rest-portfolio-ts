@@ -79,8 +79,6 @@ async function putUpdateSocialUserController(
     const { body, id } = req;
     if (id) {
       const response = await updateSocialUserService({ data: body, uuid: id });
-      if (typeof response === "object")
-        return res.status(400).json({ dontsave: response });
       return res.status(200).json({ message: response });
     } else {
       throw new UnauthorizedError(
