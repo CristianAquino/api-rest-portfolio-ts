@@ -17,56 +17,6 @@ const skillRoute = Router();
 
 /**
 @swagger
- * /skill/all-skill-data:
- *  get:
- *   tags:
- *    - Skill
- *   summary: skill user
- *   description: skill user
- *   responses:
- *    200:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/AllDataSkill'
- *    204:
- *     description: No content
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- */
-skillRoute.get("/all-skill-data", getAllSkillDataController);
-
-/**
-@swagger
- * /skill/me-skill-data:
- *  get:
- *   tags:
- *    - Skill
- *   summary: skill user
- *   description: skill user
- *   responses:
- *    200:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/AllDataSkill'
- *    204:
- *     description: No content
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *   security:
- *    - bearerAuth: []
- */
-skillRoute.get("/me-skill-data", verifyToken, getMeSkillDataController);
-
-/**
-@swagger
  * /skill/create-skill:
  *  post:
  *   tags:
@@ -220,5 +170,55 @@ skillRoute.delete(
   [schemaValidator(IdentifierIdSchema), verifyToken],
   deleteSkillController
 );
+
+/**
+@swagger
+ * /skill/all-skill-data:
+ *  get:
+ *   tags:
+ *    - Skill
+ *   summary: skill user
+ *   description: skill user
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/AllDataSkill'
+ *    204:
+ *     description: No content
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ */
+skillRoute.get("/all-skill-data", getAllSkillDataController);
+
+/**
+@swagger
+ * /skill/me-skill-data:
+ *  get:
+ *   tags:
+ *    - Skill
+ *   summary: skill user
+ *   description: skill user
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/AllDataSkill'
+ *    204:
+ *     description: No content
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ *   security:
+ *    - bearerAuth: []
+ */
+skillRoute.get("/me-skill-data", verifyToken, getMeSkillDataController);
 
 export { skillRoute };

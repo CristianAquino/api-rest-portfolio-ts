@@ -17,56 +17,6 @@ const socialRoute = Router();
 
 /**
  *@swagger
- * /social/all-social-data:
- *  get:
- *   tags:
- *    - Social
- *   summary: social user
- *   description: social user
- *   responses:
- *    200:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/AllDataSocialUser'
- *    204:
- *     description: No content
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- */
-socialRoute.get("/all-social-data", getAllSocialDataUserController);
-
-/**
- *@swagger
- * /social/me-social-data:
- *  get:
- *   tags:
- *    - Social
- *   summary: social user
- *   description: social user
- *   responses:
- *    200:
- *     description: successful operation
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/AllDataSocialUser'
- *    204:
- *     description: No content
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *   security:
- *    - bearerAuth: []
- */
-socialRoute.get("/me-social-data", verifyToken, getMeSocialDataUserController);
-
-/**
- *@swagger
  * /social/create-social:
  *  post:
  *   tags:
@@ -220,5 +170,55 @@ socialRoute.delete(
   [schemaValidator(IdentifierIdSchema), verifyToken],
   deleteSocialUserController
 );
+
+/**
+ *@swagger
+ * /social/all-social-data:
+ *  get:
+ *   tags:
+ *    - Social
+ *   summary: social user
+ *   description: social user
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/AllDataSocialUser'
+ *    204:
+ *     description: No content
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ */
+socialRoute.get("/all-social-data", getAllSocialDataUserController);
+
+/**
+ *@swagger
+ * /social/me-social-data:
+ *  get:
+ *   tags:
+ *    - Social
+ *   summary: social user
+ *   description: social user
+ *   responses:
+ *    200:
+ *     description: successful operation
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/AllDataSocialUser'
+ *    204:
+ *     description: No content
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ *   security:
+ *    - bearerAuth: []
+ */
+socialRoute.get("/me-social-data", verifyToken, getMeSocialDataUserController);
 
 export { socialRoute };

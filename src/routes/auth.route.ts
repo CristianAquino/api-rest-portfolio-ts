@@ -143,6 +143,46 @@ authRoute.get(
 
 /**
  *@swagger
+ * /auth/change-password:
+ *  put:
+ *   tags:
+ *    - Auth
+ *   summary: change password user
+ *   description: change password user
+ *   requestBody:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/ChangePasswordUser'
+ *   responses:
+ *    201:
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ *    404:
+ *     description: user not found
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/MessageResponseActionUser'
+ *    422:
+ *     description: validation exception
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
+ *   security:
+ *    - bearerAuth: []
+ */
+ authRoute.put(
+  "/change-password",
+  [schemaValidator(ChangePasswordUserSchema), verifyToken],
+  putChangePasswordUserController
+);
+
+/**
+ *@swagger
  * /auth/code-change-password:
  *  post:
  *   tags:
@@ -180,46 +220,6 @@ authRoute.post(
   "/code-change-password",
   [schemaValidator(HeaderAuthorizationUserSchema), verifyToken],
   postCodeChangePasswordUserController
-);
-
-/**
- *@swagger
- * /auth/change-password:
- *  put:
- *   tags:
- *    - Auth
- *   summary: change password user
- *   description: change password user
- *   requestBody:
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/ChangePasswordUser'
- *   responses:
- *    201:
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *    404:
- *     description: user not found
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/MessageResponseActionUser'
- *    422:
- *     description: validation exception
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/ErrorMessageInputDataUser'
- *   security:
- *    - bearerAuth: []
- */
-authRoute.put(
-  "/change-password",
-  [schemaValidator(ChangePasswordUserSchema), verifyToken],
-  putChangePasswordUserController
 );
 
 export { authRoute };
