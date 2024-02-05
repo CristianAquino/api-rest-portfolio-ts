@@ -51,6 +51,8 @@ async function postCreateSkillController(
         "You do not have permissions to perform this action"
       );
     const response = await createSkillService({ uuid: id, data: body });
+    if (typeof response === "object")
+      return res.status(400).json({ dontsave: response });
     return res.status(201).json({ message: response });
   } catch (error) {
     return next(error);

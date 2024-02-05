@@ -71,8 +71,6 @@ async function putUpdateProjectController(
         "You do not have permissions to perform this action"
       );
     const response = await updateProjectService({ data: body, uuid: id });
-    if (typeof response === "object")
-      return res.status(400).json({ dontsave: response });
     return res.status(200).json({ message: response });
   } catch (error) {
     return next(error);

@@ -4,7 +4,7 @@ async function allDataImageService() {
   const images = await Images.find();
 
   if (images.length == 0) {
-    return [];
+    return "No images created yet";
   } else {
     return images;
   }

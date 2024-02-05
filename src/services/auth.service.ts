@@ -10,6 +10,8 @@ import {
   CreatedError,
   NotFoundError,
   ResendEmailError,
+  UnauthorizedError,
+  UpdatedError,
   comparePassword,
   createToken,
   encryptPassword,
@@ -24,7 +26,8 @@ async function signinUserService({
   const matchPassword =
     user === null ? false : await comparePassword(password, user.password);
 
-  if (!matchPassword) throw new NotFoundError("Password or email not found");
+  if (!matchPassword)
+    throw new NotFoundError("Password or email not found, please try again");
 
   user.uuid = randomUUID();
 
@@ -34,9 +37,13 @@ async function signinUserService({
   const expire = 60 * 60;
   const token = createToken(signToken, expire);
 
-  if (!token) throw new CreatedError("Could not create the token");
+  if (!token)
+    throw new CreatedError("Could not create session, please try again");
 
-  await user.save();
+  const updateUser = await user.save();
+
+  if (!updateUser.uuid)
+    throw new CreatedError("Could not create session, please try again");
 
   return token;
 }
@@ -59,21 +66,27 @@ async function signupUserService({
 
   const newUser = await user.save();
 
-  if (!newUser) throw new CreatedError("Could not register in the database");
+  if (!newUser)
+    throw new CreatedError(
+      "Could not register in the database, please try again"
+    );
 
-  return "user created";
+  return "User created";
 }
 
 async function logoutUserService({ uuid }: Omit<ParamsType<unknown>, "data">) {
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NotFoundError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   user.uuid = null;
 
-  await user.save();
+  const updateUser = await user.save();
 
-  return "user logout";
+  if (updateUser.uuid)
+    throw new UnauthorizedError("Could not close session, please try again");
+
+  return "User logout";
 }
 
 async function codeChangePasswordUserService({
@@ -81,17 +94,20 @@ async function codeChangePasswordUserService({
 }: Omit<ParamsType<unknown>, "data">) {
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NotFoundError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   user.code = "" + Math.floor(Math.random() * (9999 - 1000) + 1000);
 
-  const { error } = await sendCodeWithEmail({ data: user });
+  const updateUser = await user.save();
+
+  if (!updateUser.code)
+    throw new CreatedError("Could not create code, please try again");
+
+  const { error } = await sendCodeWithEmail({ data: updateUser });
 
   if (error !== null) {
     throw new ResendEmailError(error?.message);
   }
-
-  user.save();
 
   return "Check your email and enter the generated code";
 }
@@ -103,7 +119,7 @@ async function changePasswordUserService({
   const { code, oldpassword, newpassword } = data;
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NotFoundError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const matchPassword =
     user === null ? false : await comparePassword(oldpassword, user.password);
@@ -119,9 +135,15 @@ async function changePasswordUserService({
   user.password = hashPassword;
   user.code = null;
 
-  user.save();
+  const updateUser = await user.save();
 
-  return "Password changed";
+  const validate = await comparePassword(newpassword, updateUser.password);
+
+  if (validate) {
+    return "Password changed";
+  } else {
+    throw new UpdatedError("Could not update password, please try again");
+  }
 }
 export {
   changePasswordUserService,

@@ -1,7 +1,7 @@
 import { Images, Users } from "../entities";
 import { AllUserDTO, UserDTO } from "../entities/DTO";
 import { ImageType, ParamsType, UpdateDataUserType } from "../types";
-import { NoContentError, NotFoundError, UpdatedError } from "../utils";
+import { NotFoundError, UpdatedError } from "../utils";
 
 // se realizan dos llamadas
 // 1. Obtener todos los usuarios
@@ -16,7 +16,7 @@ async function allUserDataService() {
   });
 
   if (user.length == 0) {
-    return [];
+    return "No users created yet";
   } else {
     const userDTO = user.map((user) => new AllUserDTO(user));
 
@@ -30,7 +30,7 @@ async function meUserDataService({ uuid }: Omit<ParamsType<unknown>, "data">) {
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data social user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const userDTO = new UserDTO(user);
 
@@ -43,14 +43,14 @@ async function updateDataUserService({
 }: ParamsType<UpdateDataUserType>) {
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NotFoundError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const userUpdate = await Users.update({ uuid }, data);
 
   if (userUpdate.affected === 0)
-    throw new UpdatedError("Could not update the user");
+    throw new UpdatedError("Could not update the user, please try again");
 
-  return "user updated";
+  return "User updated";
 }
 
 async function updateImageUserService({ uuid, data }: ParamsType<ImageType>) {
@@ -60,15 +60,17 @@ async function updateImageUserService({ uuid, data }: ParamsType<ImageType>) {
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NotFoundError("User not found");
-  if (user.image.id !== id) throw new NotFoundError("Image not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
+
+  if (user.image.id !== id)
+    throw new NotFoundError("Image not found, please try again");
 
   const imageUpdate = await Images.update({ id }, sf);
 
   if (imageUpdate.affected === 0)
-    throw new UpdatedError("Could not update the user image");
+    throw new UpdatedError("Could not update the user image, please try again");
 
-  return "image update";
+  return "Image update";
 }
 
 export {

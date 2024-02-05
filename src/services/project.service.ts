@@ -7,7 +7,7 @@ import {
   ProjectUpdateSkillsType,
   ProjectUpdateType,
 } from "../types";
-import { NoContentError, UpdatedError } from "../utils";
+import { CreatedError, NotFoundError, UpdatedError } from "../utils";
 
 async function allProjectDataService() {
   const project = await Projects.find({
@@ -16,8 +16,9 @@ async function allProjectDataService() {
       image: true,
     },
   });
+
   if (project.length == 0) {
-    return [];
+    return "No projects created yet";
   } else {
     const projectDTO = project.map((project) => new ProjectDTO(project));
     return projectDTO;
@@ -29,7 +30,7 @@ async function meProjectDataService({
 }: Omit<ParamsType<unknown>, "data">) {
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NoContentError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const id = user.id;
 
@@ -39,7 +40,7 @@ async function meProjectDataService({
     .where("projects.user = :id", { id })
     .getMany();
 
-  if (!project) return null;
+  if (!project) throw new NotFoundError("Projects not found, please try again");
 
   const projectDTO = project.map((project) => new ProjectDTO(project));
 
@@ -52,7 +53,8 @@ async function createProjectUserSerice({
 }: ParamsType<ProjectCreateType>) {
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NoContentError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
+
   const project = new Projects();
   const image = new Images();
 
@@ -68,14 +70,16 @@ async function createProjectUserSerice({
   image.thumbnail = data.thumbnail;
   project.image = await image.save();
 
-  await project.save();
+  const newProject = await project.save();
 
-  return "created Project";
+  if (!newProject)
+    throw new CreatedError(
+      "Could not register in the database, please try again"
+    );
+
+  return "Created Project";
 }
-// pensar para realizar
-// la actualizacion de
-// image
-// skill
+
 async function updateProjectService({
   data,
   uuid,
@@ -85,7 +89,7 @@ async function updateProjectService({
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data project user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const myProjects = user.projects.map((project) => project.id);
 
@@ -97,16 +101,17 @@ async function updateProjectService({
       .where("project.id = :id", { id })
       .getOne();
 
-    if (!project) throw new NoContentError("project not found");
+    if (!project)
+      throw new NotFoundError("Project not found, please try again");
 
     const projectUpdate = await Projects.update({ id }, { ...sf });
 
     if (projectUpdate.affected === 0)
-      throw new UpdatedError("Could not update the user");
+      throw new UpdatedError("Could not update the project, please try again");
 
-    return "user updated";
+    return "Project updated";
   } else {
-    throw new NoContentError("project not found");
+    throw new NotFoundError("Project not found, please try again");
   }
 }
 
@@ -122,7 +127,7 @@ async function deleteProjectUserService({
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data social user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const myProjects = user.projects.map((project) => project.id);
 
@@ -132,18 +137,19 @@ async function deleteProjectUserService({
       .where("project.id = :id", { id })
       .getOne();
 
-    if (!project) throw new NoContentError("Project not found");
+    if (!project)
+      throw new NotFoundError("Project not found, please try again");
 
     const image = await Images.findOneBy({ id: project.image.id });
 
-    if (!image) throw new NoContentError("Image not found");
+    if (!image) throw new NotFoundError("Image not found, please try again");
 
     await project.remove();
     await image.remove();
 
     return `Project with ${id} is deleted`;
   } else {
-    throw new NoContentError("project not found");
+    throw new NotFoundError("Project not found, please try again");
   }
 }
 
@@ -156,7 +162,7 @@ async function updateProjectImageService({
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data social user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const myProjects = user.projects.map((project) => project.id);
 
@@ -169,7 +175,9 @@ async function updateProjectImageService({
       .getOne();
 
     if (project?.image.id !== image.id)
-      throw new NoContentError("Project not found");
+      throw new NotFoundError(
+        "The image has no relation to the project, please try again"
+      );
 
     const imageUpdate = await Images.update(
       { id: image.id },
@@ -177,11 +185,13 @@ async function updateProjectImageService({
     );
 
     if (imageUpdate.affected === 0)
-      throw new UpdatedError("Could not update the user image");
+      throw new UpdatedError(
+        "Could not update the project image, please try again"
+      );
 
-    return "image update";
+    return "Image update";
   } else {
-    throw new NoContentError("project not found");
+    throw new NotFoundError("Project not found, please try again");
   }
 }
 
@@ -194,7 +204,7 @@ async function updateProjectSkillService({
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data social user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const myProjects = user.projects.map((project) => project.id);
 
@@ -203,7 +213,8 @@ async function updateProjectSkillService({
 
     const project = await Projects.findOneBy({ id });
 
-    if (!project) throw new NoContentError("Project not found");
+    if (!project)
+      throw new NotFoundError("Project not found, please try again");
 
     const newskills = await Promise.all(
       skills.map(async (skill) => await Skills.findOneBy({ id: skill }))
@@ -213,9 +224,9 @@ async function updateProjectSkillService({
 
     await project.save();
 
-    return "skills update";
+    return "Skills update";
   } else {
-    throw new NoContentError("project not found");
+    throw new NotFoundError("Project not found, please try again");
   }
 }
 export {

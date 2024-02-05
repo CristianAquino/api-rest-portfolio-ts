@@ -1,12 +1,12 @@
 import { Skills, Users } from "../entities";
 import { ParamsType, SkillCreateType, SkillUpdateType } from "../types";
-import { NoContentError } from "../utils";
+import { NoContentError, NotFoundError, UpdatedError } from "../utils";
 
 async function allSkillDataService() {
   const skill = await Skills.find();
 
   if (skill.length == 0) {
-    return [];
+    return "No skills created yet";
   } else {
     return skill;
   }
@@ -18,15 +18,18 @@ async function meSkillDataService({ uuid }: Omit<ParamsType<unknown>, "data">) {
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) return user;
+  if (!user) throw new NotFoundError("User not found, please try again");
 
-  return user.skills;
+  const skills = user.skills;
+
+  return skills;
 }
 
 async function createSkillService({ uuid, data }: ParamsType<SkillCreateType>) {
+  const notfound = [];
   const user = await Users.findOneBy({ uuid });
 
-  if (!user) throw new NoContentError("User not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   for (const item of data) {
     const skill = new Skills();
@@ -36,10 +39,18 @@ async function createSkillService({ uuid, data }: ParamsType<SkillCreateType>) {
     skill.type = item.type;
     skill.user = user;
 
-    await skill.save();
+    const newSkill = await skill.save();
+
+    if (!newSkill) {
+      notfound.push(item);
+    }
   }
 
-  return "created skill";
+  if (notfound.length > 0) {
+    return notfound;
+  } else {
+    return "All created skill";
+  }
 }
 
 async function updateSkillService({ data, uuid }: ParamsType<SkillUpdateType>) {
@@ -48,7 +59,7 @@ async function updateSkillService({ data, uuid }: ParamsType<SkillUpdateType>) {
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data skill user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const mySkills = user.skills.map((skill) => skill.id);
 
@@ -57,11 +68,12 @@ async function updateSkillService({ data, uuid }: ParamsType<SkillUpdateType>) {
 
     const updateSkill = await Skills.update({ id }, sf);
 
-    if (updateSkill.affected === 0) throw new NoContentError("skill not found");
+    if (updateSkill.affected === 0)
+      throw new UpdatedError("Could not update the skill, please try again");
 
-    return "updated skill";
+    return "Updated skill";
   } else {
-    throw new NoContentError("project not found");
+    throw new NotFoundError("Project not found, please try again");
   }
 }
 
@@ -71,7 +83,7 @@ async function deleteSkillService({ id, uuid }: { id: string; uuid: string }) {
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NoContentError("Data social user not found");
+  if (!user) throw new NotFoundError("User not found, please try again");
 
   const mySkills = user.skills.map((skill) => skill.id);
 
@@ -80,9 +92,9 @@ async function deleteSkillService({ id, uuid }: { id: string; uuid: string }) {
 
     await skill?.remove();
 
-    return `skill with ${id} is deleted`;
+    return `Skill with ${id} is deleted`;
   } else {
-    throw new NoContentError("skill not found");
+    throw new NotFoundError("Skill not found, please try again");
   }
 }
 
