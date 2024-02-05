@@ -18,10 +18,7 @@ async function postSigninUserController(
     const response = await signinUserService({ data: req.body });
     return res.status(200).json({ token: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -34,10 +31,7 @@ async function postSignupUserController(
     const response = await signupUserService({ data: req.body });
     return res.status(201).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -47,20 +41,14 @@ async function getLogoutUserController(
   next: NextFunction
 ) {
   try {
-    const { id } = req;
-    if (id) {
-      const response = await logoutUserService({ uuid: id });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await logoutUserService({ uuid: req.id });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -70,20 +58,14 @@ async function postCodeChangePasswordUserController(
   next: NextFunction
 ) {
   try {
-    const { id } = req;
-    if (id) {
-      const response = await codeChangePasswordUserService({ uuid: id });
-      return res.status(201).json({ message: response });
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await codeChangePasswordUserService({ uuid: req.id });
+    return res.status(201).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -93,23 +75,17 @@ async function putChangePasswordUserController(
   next: NextFunction
 ) {
   try {
-    const { id } = req;
-    if (id) {
-      const response = await changePasswordUserService({
-        uuid: id,
-        data: req.body,
-      });
-      return res.status(201).json({ message: response });
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await changePasswordUserService({
+      uuid: req.id,
+      data: req.body,
+    });
+    return res.status(201).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 

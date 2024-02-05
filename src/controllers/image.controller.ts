@@ -10,10 +10,7 @@ async function getAllDataImageController(
     const response = await allDataImageService();
     return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 

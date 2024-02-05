@@ -20,10 +20,7 @@ async function getAllProjectDataController(
     const response = await allProjectDataService();
     return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -33,19 +30,14 @@ async function getMeProjectDataController(
   next: NextFunction
 ) {
   try {
-    if (req.id) {
-      const response = await meProjectDataService({ uuid: req.id });
-      return res.status(200).json(response);
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await meProjectDataService({ uuid: req.id });
+    return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -56,19 +48,14 @@ async function postCreateProjectUserController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await createProjectUserSerice({ uuid: id, data: body });
-      return res.status(201).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await createProjectUserSerice({ uuid: id, data: body });
+    return res.status(201).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -79,21 +66,16 @@ async function putUpdateProjectController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await updateProjectService({ data: body, uuid: id });
-      if (typeof response === "object")
-        return res.status(400).json({ dontsave: response });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await updateProjectService({ data: body, uuid: id });
+    if (typeof response === "object")
+      return res.status(400).json({ dontsave: response });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -103,20 +85,15 @@ async function deleteProjectUserController(
   next: NextFunction
 ) {
   try {
-    if (req.id) {
-      const { id } = req.params;
-      const response = await deleteProjectUserService({ id, uuid: req.id });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const { id } = req.params;
+    const response = await deleteProjectUserService({ id, uuid: req.id });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -127,22 +104,17 @@ async function putUpdateProjectImageController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await updateProjectImageService({
-        data: body,
-        uuid: id,
-      });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await updateProjectImageService({
+      data: body,
+      uuid: id,
+    });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -153,22 +125,17 @@ async function putUpdateProjectSkillController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = updateProjectSkillService({
-        data: body,
-        uuid: id,
-      });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = updateProjectSkillService({
+      data: body,
+      uuid: id,
+    });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 export {

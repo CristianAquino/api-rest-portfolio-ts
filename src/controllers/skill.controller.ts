@@ -18,10 +18,7 @@ async function getAllSkillDataController(
     const response = await allSkillDataService();
     return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -31,19 +28,14 @@ async function getMeSkillDataController(
   next: NextFunction
 ) {
   try {
-    if (req.id) {
-      const response = await meSkillDataService({ uuid: req.id });
-      return res.status(200).json(response);
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await meSkillDataService({ uuid: req.id });
+    return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -54,19 +46,14 @@ async function postCreateSkillController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await createSkillService({ uuid: id, data: body });
-      return res.status(201).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await createSkillService({ uuid: id, data: body });
+    return res.status(201).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -77,19 +64,14 @@ async function putUpdateSkillController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await updateSkillService({ data: body, uuid: id });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await updateSkillService({ data: body, uuid: id });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -99,20 +81,15 @@ async function deleteSkillController(
   next: NextFunction
 ) {
   try {
-    if (req.id) {
-      const { id } = req.params;
-      const response = await deleteSkillService({ id, uuid: req.id });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const { id } = req.params;
+    const response = await deleteSkillService({ id, uuid: req.id });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 

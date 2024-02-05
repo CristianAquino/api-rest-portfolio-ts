@@ -17,10 +17,7 @@ async function getAllUserDataController(
     const response = await allUserDataService();
     return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -30,19 +27,14 @@ async function getMeUserDataController(
   next: NextFunction
 ) {
   try {
-    if (req.id) {
-      const response = await meUserDataService({ uuid: req.id });
-      return res.status(200).json(response);
-    } else {
+    if (!req.id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await meUserDataService({ uuid: req.id });
+    return res.status(200).json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -53,19 +45,14 @@ async function putUpdateDataUserController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await updateDataUserService({ data: body, uuid: id });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await updateDataUserService({ data: body, uuid: id });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 
@@ -76,19 +63,14 @@ async function putUpdateImageUserController(
 ) {
   try {
     const { body, id } = req;
-    if (id) {
-      const response = await updateImageUserService({ data: body, uuid: id });
-      return res.status(200).json({ message: response });
-    } else {
+    if (!id)
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    }
+    const response = await updateImageUserService({ data: body, uuid: id });
+    return res.status(200).json({ message: response });
   } catch (error) {
-    if (error instanceof Error) {
-      return next(error);
-    }
-    return res.status(500).json({ message: "Internal Server Error" });
+    return next(error);
   }
 }
 export {
