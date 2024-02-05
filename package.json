@@ -4,10 +4,12 @@
   "description": "rest api for the portfolio, where information will be obtained and created regarding the user, projects and skills they have",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev ts-node-dev --respawn src/index.ts",
-    "build": "cross-env NODE_ENV=build tsc && cp src/templates/send-email-bill.ejs dist/templates",
-    "start": "cross-env NODE_ENV=build node dist/index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose"
+    "dev": "NODE_ENV=dev ts-node-dev --respawn src/index.ts",
+    "build": "NODE_ENV=build tsc && cp src/templates/send-email-bill.ejs dist/templates",
+    "start": "NODE_ENV=production node dist/index.js",
+    "test": "NODE_ENV=test jest --verbose",
+    "wtest": "cross-env NODE_ENV=test jest --verbose",
+    "wdev": "cross-env NODE_ENV=dev ts-node-dev --respawn src/index.ts"
   },
   "keywords": [],
   "author": "",
