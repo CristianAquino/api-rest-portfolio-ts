@@ -1,5 +1,6 @@
 import {
   BaseEntity,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -15,9 +16,11 @@ import { Images } from "./Images.entity";
 import { Socials } from "./Socials.entity";
 import { Projects } from "./Projects.entity";
 import { Skills } from "./Skills.entity";
+import { NextFunction, Request, Response } from "express";
+import { CreatedError } from "../utils";
 
 @Entity({ name: "Users", orderBy: { createdAt: "DESC" } })
-// @Unique(["email"])
+@Unique(["email"])
 class Users extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -71,6 +74,16 @@ class Users extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAd: Date;
+
+  @BeforeInsert()
+  async checkUserLimit(req: Request, res: Response) {
+    const count = await Users.count();
+    if (count >= 1) {
+      throw new CreatedError(
+        "Only a maximum of one registered user is allowed."
+      );
+    }
+  }
 }
 
 export { Users };
