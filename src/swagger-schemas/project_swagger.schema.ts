@@ -31,7 +31,7 @@ export const OneDataProjectSwaggerSchema = {
     image: {
       $ref: "#/components/schemas/AllDataImage",
     },
-    skill: {
+    skills: {
       $ref: "#/components/schemas/AllDataSkill",
     },
   },

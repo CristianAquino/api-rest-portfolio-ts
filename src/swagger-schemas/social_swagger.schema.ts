@@ -51,9 +51,3 @@ export const InsertDataSocialUserSwaggerSchema = {
     },
   },
 };
-export const UpdateDataSocialUserSwaggerSchema = {
-  type: "array",
-  items: {
-    ...OneDataSocialUserSwaggerSchema,
-  },
-};

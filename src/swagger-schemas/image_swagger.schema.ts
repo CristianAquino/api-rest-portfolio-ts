@@ -24,10 +24,7 @@ export const OneDataImageSwaggerSchema = {
 export const AllDataImageSwaggerSchema = {
   type: "array",
   items: {
-    type: "object",
-    properties: {
-      ...OneDataImageSwaggerSchema,
-    },
+    ...OneDataImageSwaggerSchema,
   },
 };
 export const SendDataImageSwaggerSchema = {

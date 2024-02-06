@@ -30,10 +30,7 @@ export const OneDataSkillSwaggerSchema = {
 export const AllDataSkillSwaggerSchema = {
   type: "array",
   items: {
-    type: "object",
-    properties: {
-      ...OneDataSkillSwaggerSchema,
-    },
+    ...OneDataSkillSwaggerSchema,
   },
 };
 export const InsertDataSkillSwaggerSchema = {
@@ -45,9 +42,3 @@ export const InsertDataSkillSwaggerSchema = {
     },
   },
 };
-// export const UpdateDataSkillSwaggerSchema = {
-//   type: "array",
-//   items: {
-//     ...OneDataSkillSwaggerSchema,
-//   },
-// };
