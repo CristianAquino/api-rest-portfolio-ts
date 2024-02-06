@@ -24,7 +24,7 @@ async function meSocialDataUserService({
     .where("users.uuid = :uuid", { uuid })
     .getOne();
 
-  if (!user) throw new NotFoundError("User not found, please try again");
+  if (!user) throw new NotFoundError("No social created yet, please try again");
 
   const socials = user.socials;
 
@@ -84,7 +84,7 @@ async function updateSocialUserService({
 
     return "Updated social";
   } else {
-    throw new NotFoundError("Project not found, please try again");
+    throw new NotFoundError("Social not found, please try again");
   }
 }
 
