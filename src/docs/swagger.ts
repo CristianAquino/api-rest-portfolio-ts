@@ -13,13 +13,13 @@ import {
   OneDataImageSwaggerSchema,
   OneDataProjectSwaggerSchema,
   OneDataSkillSwaggerSchema,
+  OneDataSocialUserSwaggerSchema,
   OneDataUserSwaggerSchema,
   SendDataImageSwaggerSchema,
   SigninUserSwaggerSchema,
   SignupDataUserSwaggerSchema,
   TokenSigninUserSwaggerSchema,
   UpdateDataProjectSwaggerSchema,
-  UpdateDataSocialUserSwaggerSchema,
   UpdateDataUserSwaggerSchema,
   UpdateImageDataProjectSwaggerSchema,
   UpdateSkillsDataProjectSwaggerSchema,
@@ -82,7 +82,7 @@ const swaggerDefinition: OAS3Definition = {
       // social
       AllDataSocialUser: AllDataSocialUserSwaggerSchema,
       InsertDataSocialUser: InsertDataSocialUserSwaggerSchema,
-      UpdateDataSocialUser: UpdateDataSocialUserSwaggerSchema,
+      UpdateDataSocialUser: OneDataSocialUserSwaggerSchema,
       // project
       AllDataProject: AllDataProjectSwaggerSchema,
       OneDataProject: OneDataProjectSwaggerSchema,
