@@ -34,7 +34,7 @@ export const BaseDataUserSchema = z.object({
     .trim()
     .min(3, { message: "min length must be 3" })
     .max(200, { message: "max length must be 200" }),
-  cv_link: z.null(
+  cv_link: z.nullable(
     z
       .string({
         required_error: "cv link is required",
