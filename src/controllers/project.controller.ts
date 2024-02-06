@@ -127,7 +127,7 @@ async function putUpdateProjectSkillController(
       throw new UnauthorizedError(
         "You do not have permissions to perform this action"
       );
-    const response = updateProjectSkillService({
+    const response = await updateProjectSkillService({
       data: body,
       uuid: id,
     });

@@ -40,7 +40,8 @@ async function meProjectDataService({
     .where("projects.user = :id", { id })
     .getMany();
 
-  if (!project) throw new NotFoundError("Projects not found, please try again");
+  if (!project)
+    throw new NotFoundError("No project created yet, please try again");
 
   const projectDTO = project.map((project) => new ProjectDTO(project));
 
@@ -62,22 +63,26 @@ async function createProjectUserSerice({
     data.skills.map(async (skill) => await Skills.findOneBy({ id: skill }))
   );
 
-  project.title = data.title;
-  project.link = data.link;
-  project.description = data.description;
-  project.user = user;
-  project.skills = skills as Skills[];
-  image.thumbnail = data.thumbnail;
-  project.image = await image.save();
+  if (skills.filter((e) => e !== null).length > 0) {
+    project.title = data.title;
+    project.link = data.link;
+    project.description = data.description;
+    project.user = user;
+    project.skills = skills as Skills[];
+    image.thumbnail = data.thumbnail;
+    project.image = await image.save();
 
-  const newProject = await project.save();
+    const newProject = await project.save();
 
-  if (!newProject)
-    throw new CreatedError(
-      "Could not register in the database, please try again"
-    );
+    if (!newProject)
+      throw new CreatedError(
+        "Could not register in the database, please try again"
+      );
 
-  return "Created Project";
+    return "Created Project";
+  } else {
+    throw new CreatedError("Skills entered is not valid, please try again");
+  }
 }
 
 async function updateProjectService({
@@ -220,11 +225,15 @@ async function updateProjectSkillService({
       skills.map(async (skill) => await Skills.findOneBy({ id: skill }))
     );
 
-    project.skills = newskills as Skills[];
+    if (newskills.filter((e) => e !== null).length > 0) {
+      project.skills = newskills as Skills[];
 
-    await project.save();
+      await project.save();
 
-    return "Skills update";
+      return "Skills update";
+    } else {
+      throw new CreatedError("Skills entered is not valid, please try again");
+    }
   } else {
     throw new NotFoundError("Project not found, please try again");
   }
