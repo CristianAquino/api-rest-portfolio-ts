@@ -30,42 +30,32 @@ export const PermanDataUser = {
   },
 };
 export const AllDataUserSwaggerSchema = {
-  // type: "array",
-  // items: {
-  type: "object",
-  properties: {
-    id: {
-      type: "string",
-      description: "User ID",
-      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
-    ...PermanDataUser,
-    email: {
-      type: "string",
-      description: "User email",
-      example: "lorem@ipsum.com",
-    },
-    uuid: {
-      type: "string",
-      description: "User uuid",
-      example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
-    },
-    code: {
-      type: "string",
-      description: "Code change password",
-      example: "1234",
-    },
-    image: {
-      $ref: "#/components/schemas/OneDataImage",
-    },
-    socials: {
-      $ref: "#/components/schemas/AllDataSocialUser",
-    },
-    skills: {
-      $ref: "#/components/schemas/AllDataSkill",
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      id: {
+        type: "string",
+        description: "User ID",
+        example: "2e63341a-e627-48ac-bb1a-9d56e2e9cc4f",
+      },
+      ...PermanDataUser,
+      email: {
+        type: "string",
+        description: "User email",
+        example: "lorem@ipsum.com",
+      },
+      image: {
+        $ref: "#/components/schemas/OneDataImage",
+      },
+      socials: {
+        $ref: "#/components/schemas/AllDataSocialUser",
+      },
+      skills: {
+        $ref: "#/components/schemas/AllDataSkill",
+      },
     },
   },
-  // },
 };
 export const OneDataUserSwaggerSchema = {
   type: "object",
