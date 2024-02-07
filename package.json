@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev ts-node-dev --respawn src/index.ts",
-    "build": "NODE_ENV=build tsc && cp src/templates/send-email-bill.ejs dist/templates",
+    "build": "NODE_ENV=build tsc",
     "start": "NODE_ENV=production node dist/index.js",
     "test": "NODE_ENV=test jest --verbose",
     "wtest": "cross-env NODE_ENV=test jest --verbose",
