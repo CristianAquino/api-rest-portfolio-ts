@@ -20,7 +20,7 @@ async function allUserDataService() {
   } else {
     const userDTO = user.map((user) => new AllUserDTO(user));
 
-    return userDTO;
+    return userDTO[0];
   }
 }
 

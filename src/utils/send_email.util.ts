@@ -1,5 +1,4 @@
 import { Resend } from "resend";
-import { UserDTO } from "../entities/DTO";
 import { Users } from "../entities";
 
 const { RESEND_KEY, EMAIL } = process.env;
@@ -38,5 +37,5 @@ margin:0 auto">
 
   return send;
 }
-// falta poner el attentamente
+
 export { sendCodeWithEmail };
