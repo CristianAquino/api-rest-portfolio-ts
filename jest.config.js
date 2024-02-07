@@ -9,4 +9,5 @@ module.exports = {
     "<rootDir>/test/",
     "<rootDir>/node_modules/",
   ],
+  setupFiles: ["dotenv/config"], // necesario para incluir el env
 };
