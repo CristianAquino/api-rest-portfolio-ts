@@ -37,7 +37,10 @@ const swaggerDefinition: OAS3Definition = {
     description:
       "API developed for the portfolio web project, where there is information about the user, projects carried out and their skills in programming languages, frameworks, clud and tools",
   },
-  servers: [{ url: "http://localhost:3000/api/v1" }],
+  servers: [
+    { url: "http://localhost:3000/api/v1" },
+    { url: "https://api-rest-portfolio-ts.onrender.com/api/v1" },
+  ],
   tags: [
     {
       name: "Auth",
