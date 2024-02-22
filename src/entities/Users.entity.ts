@@ -40,7 +40,7 @@ class Users extends BaseEntity {
   @Column({ type: "varchar" })
   email: string;
 
-  @Column({ type: "varchar", length: 32 })
+  @Column({ type: "varchar" })
   password: string;
 
   @Column({ type: "varchar", nullable: true })
